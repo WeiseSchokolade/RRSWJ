@@ -13,7 +13,6 @@ classes/
 # maven
 
 target/
-pom.xml
 
 # eclipse
 
