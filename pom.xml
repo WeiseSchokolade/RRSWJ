@@ -15,7 +15,8 @@
       <id>github</id>
       <name>GitHub WeiseSchokolade RRSWJ</name>
       <url>https://maven.pkg.github.com/WeiseSchokolade/RRSWJ</url>
-    </respository>
+    </repository>
+  </distributionManagement>
   <build>
     <pluginManagement>
       <plugins>
