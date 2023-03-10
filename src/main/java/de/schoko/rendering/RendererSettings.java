@@ -3,19 +3,39 @@ package de.schoko.rendering;
 import java.awt.Color;
 
 public class RendererSettings {
+	private Window window;
 	private boolean autoCam;
 	private Color backgroundColor;
 	private boolean crashOnException;
 	private boolean displayStartedNotification;
 	private boolean maximizedByDefault;
 	private boolean renderCoordinateSystem;
+	private Image windowIcon;
+	private boolean windowResizable;
+	private int windowWidth = -1, windowHeight = -1;
 	
-	protected RendererSettings() {
+	protected RendererSettings(Window window) {
+		this.window = window;
 		autoCam = true;
 		backgroundColor = Color.LIGHT_GRAY;
 		crashOnException = true;
 		displayStartedNotification = true;
 		renderCoordinateSystem = true;
+		windowResizable = true;
+	}
+	
+	/**
+	 * Applies window settings like windowIcon and windowResizable
+	 * if they were set before the window opened.
+	 */
+	protected void windowOpened() {
+		if (windowIcon != null) {
+			window.getSwingWindow().setIconImage(windowIcon.getAWTImage());
+		}
+		window.getSwingWindow().setResizable(windowResizable);
+		if (windowWidth != -1) {
+			window.getSwingWindow().setSize(windowWidth, windowHeight);
+		}
 	}
 	
 	public boolean isRenderingCoordinateSystem() {
@@ -66,6 +86,10 @@ public class RendererSettings {
 		return crashOnException;
 	}
 	
+	/**
+	 * Sets whether the program should crash if an exception occures
+	 * @param crashOnException
+	 */
 	public void setCrashOnException(boolean crashOnException) {
 		this.crashOnException = crashOnException;
 	}
@@ -92,5 +116,53 @@ public class RendererSettings {
 	 */
 	public void setMaximizedByDefault(boolean maximizedByDefault) {
 		this.maximizedByDefault = maximizedByDefault;
+	}
+	
+	/**
+	 * Sets the window's icon
+	 * @param image The new icon
+	 */
+	public void setWindowIcon(Image image) {
+		if (window.isOpen()) {
+			window.getSwingWindow().setIconImage(image.getAWTImage());
+		} else {
+			this.windowIcon = image;
+		}
+	}
+	
+	public boolean isWindowResizable() {
+		return windowResizable;
+	}
+	
+	/**
+	 * Sets whether the window can be resized;
+	 * @param windowResizable Whether the window can be resized;
+	 */
+	public void setWindowResizable(boolean windowResizable) {
+		this.windowResizable = windowResizable;
+		if (window.isOpen()) {
+			window.getSwingWindow().setResizable(windowResizable);
+		}
+	}
+	
+	public int getWindowWidth() {
+		return windowWidth;
+	}
+	
+	public int getWindowHeight() {
+		return windowHeight;
+	}
+	
+	/**
+	 * Sets the size of the window
+	 * @param windowWidth The window's width
+	 * @param windowHeight The window's height
+	 */
+	public void setWindowSize(int windowWidth, int windowHeight) {
+		this.windowWidth = windowWidth;
+		this.windowHeight = windowHeight;
+		if (window.isOpen()) {
+			window.getSwingWindow().setSize(windowWidth, windowHeight);
+		}
 	}
 }

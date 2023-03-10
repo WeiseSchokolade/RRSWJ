@@ -10,6 +10,7 @@ public class Window {
 	private RendererSettings rendererSettings;
 	private Context context;
 	private Image windowIcon;
+	private boolean open;
 	
 	/**
 	 * Creates a new invisible Window with the given titel and renderer object.
@@ -20,7 +21,7 @@ public class Window {
 	public Window(Renderer renderer, String title) {
 		this.renderer = renderer;
 		this.title = title;
-		this.rendererSettings = new RendererSettings();
+		this.rendererSettings = new RendererSettings(this);
 	}
 	
 	/**
@@ -49,6 +50,8 @@ public class Window {
 		if (windowIcon != null) {
 			swingWindow.setIconImage(windowIcon.getAWTImage());
 		}
+		open = true;
+		rendererSettings.windowOpened();
 	}
 
 	public void openEditPanel(String initialText, ChangeApplier ca) {
@@ -71,6 +74,16 @@ public class Window {
 		return swingWindow;
 	}
 	
+	public boolean isOpen() {
+		return open;
+	}
+	
+	/**
+	 * @deprecated
+	 * This method is deprecated in favor of {@link RendererSettings#setWindowIcon(Image)}
+	 * @param image
+	 */
+	@Deprecated(since = "1.1.0", forRemoval = true)
 	public void setWindowIcon(Image image) {
 		if (swingWindow != null) {
 			swingWindow.setIconImage(image.getAWTImage());
