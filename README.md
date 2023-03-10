@@ -9,8 +9,8 @@ RRSWJ renders stuff with java
   <url>https://www.jitpack.io</url>
 </repository>
 <dependency>
-  <groupId>com.github.User</groupId>
-  <artifactId>Repo</artifactId>
-  <version>Tag</version>
+  <groupId>com.github.WeiseSchokolade</groupId>
+  <artifactId>RRSWJ</artifactId>
+  <version>master-SNAPSHOT</version>
 </dependency>
 ```
