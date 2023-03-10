@@ -105,10 +105,34 @@ public class Keyboard {
 		});
 	}
 
+	/**
+	 * Checks whether the given key is being pressed
+	 * @param keyCode The Key's Code
+	 * @return Whether the key is being pressed
+	 */
 	public boolean isPressed(int keyCode) {
 		return pressedKeys[keyCode];
 	}
 	
+	/**
+	 * Checks whether one of the given keys is pressed
+	 * @return
+	 */
+	public boolean isPressed(int keyCode, int... keyCodes) {
+		if (pressedKeys[keyCode]) return true;
+		for (int i = 0; i < keyCodes.length; i++) {
+			if (pressedKeys[keyCodes[i]]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks whether the given key is pressed once.
+	 * @param keyCode The key to be checked
+	 * @return Whether the key was recently pressed
+	 */
 	public boolean wasRecentlyPressed(int keyCode) {
 		if (recentlyPressedKeys[keyCode]) {
 			recentlyPressedKeys[keyCode] = false;
