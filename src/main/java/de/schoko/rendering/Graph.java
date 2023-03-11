@@ -19,17 +19,20 @@ public class Graph {
 	
 	private Panel panel;
 	private Graphics2D g2D;
+	private int drawXOffset, drawYOffset;
 	private int width, height;
 	private int camX, camY;
 	private double zoom = 50;
 	private ArrayList<String> debugStrings;
 	private HUDGraph hud;
 	
-	public Graph(Panel panel, Graphics gEntered, int width, int height, Camera camera, RendererSettings rendererSettings) {
+	public Graph(Panel panel, Graphics gEntered, Camera camera, RendererSettings rendererSettings) {
 		this.panel = panel;
 		this.g2D = (Graphics2D) gEntered;
-		this.width = width;
-		this.height = height;
+		this.drawXOffset = camera.getViewport().getDrawXOffset();
+		this.drawYOffset = camera.getViewport().getDrawYOffset();
+		this.width = camera.getViewport().getWidth();
+		this.height = camera.getViewport().getHeight();
 		this.zoom = camera.getZoom();
 		this.camX = (int) (camera.getX() * zoom);
 		this.camY = (int) -(camera.getY() * zoom);
@@ -267,11 +270,11 @@ public class Graph {
 	}
 	
 	public int convSX(double x) {
-		return (int) (x * zoom + width / 2) - camX;
+		return (int) (x * zoom + width / 2) - camX + drawXOffset;
 	}
 	
 	public int convSY(double y) {
-		return (int) (y * -zoom + height / 2) - camY;
+		return (int) (y * -zoom + height / 2) - camY + drawYOffset;
 	}
 	
 	public double convBackFromSX(double x) {

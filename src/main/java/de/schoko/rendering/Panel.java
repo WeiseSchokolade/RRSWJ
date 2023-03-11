@@ -26,9 +26,9 @@ public class Panel extends JPanel {
 		this.renderer = renderer;
 		this.rendererSettings = rendererSettings;
 		if (rendererSettings.isAutoCam()) {
-			camera = new Camera(0, 0, 50, this);
+			camera = new Camera(0, 0, 50, new DefaultViewport(this), this);
 		} else {
-			camera = new Camera(0, 0, 50);
+			camera = new Camera(0, 0, 50, new DefaultViewport(this));
 		}
 		this.notifications = new ArrayList<>();
 		if (rendererSettings.isDisplayingStartedNotification()) {
@@ -56,7 +56,7 @@ public class Panel extends JPanel {
 		});
 		
 		if (renderer != null) {
-			Graph graph = new Graph(this, g, this.getWidth(), this.getHeight(), camera, rendererSettings);
+			Graph graph = new Graph(this, g, camera, rendererSettings);
 			context.setLastGraph(graph);
 			
 			try {

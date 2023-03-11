@@ -27,6 +27,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	 */
 	private boolean movingCam;
 	private CameraPath cameraPath;
+	private Viewport viewport;
 	
 	/**
 	 * Creates a camera with a default zoom of 50
@@ -52,18 +53,34 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		this.movable = false;
 		this.originallyMovable = false;
 	}
-	
+
+	/**
+	 * @param x Initial x
+	 * @param y Initial y
+	 * @param zoom Initial zoom
+	 * @param viewport Viewport of the camera
+	 */
+	public Camera(double x, double y, double zoom, Viewport viewport) {
+		this.x = x;
+		this.y = y;
+		this.zoom = zoom;
+		this.viewport = viewport;
+		this.movable = false;
+		this.originallyMovable = false;
+	}
 	/**
 	 * Adds movement functionality to camera using the panel
 	 * @param x Initial x
 	 * @param y Initial y
 	 * @param zoom Initial zoom
+	 * @param viewport Viewport of the camera
 	 * @param panel Panel this camera is added to
 	 */
-	public Camera(double x, double y, double zoom, Panel panel) {
+	public Camera(double x, double y, double zoom, Viewport viewport, Panel panel) {
 		this.x = x;
 		this.y = y;
 		this.zoom = zoom;
+		this.viewport = viewport;
 		panel.addMouseListener(this);
 		panel.addMouseMotionListener(this);
 		panel.addMouseWheelListener(this);
@@ -105,6 +122,10 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		return zoom;
 	}
 	
+	public Viewport getViewport() {
+		return viewport;
+	}
+	
 	public void setX(double x) {
 		this.x = x;
 	}
@@ -115,6 +136,10 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	
 	public void setZoom(double zoom) {
 		this.zoom = zoom;
+	}
+	
+	public void setViewport(Viewport viewport) {
+		this.viewport = viewport;
 	}
 
 	@Override
