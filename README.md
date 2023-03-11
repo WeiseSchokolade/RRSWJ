@@ -2,6 +2,7 @@
 RRSWJ renders stuff with java
 
 ## Usage
+![Release](https://jitpack.io/v/WeiseSchokolade/RRSWJ.svg)
 #### Maven
 ```xml
 <repositories>
