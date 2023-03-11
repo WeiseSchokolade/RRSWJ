@@ -83,7 +83,7 @@ public class Window {
 	 * This method is deprecated in favor of {@link RendererSettings#setWindowIcon(Image)}
 	 * @param image
 	 */
-	@Deprecated(since = "1.1.0", forRemoval = true)
+	@Deprecated
 	public void setWindowIcon(Image image) {
 		if (swingWindow != null) {
 			swingWindow.setIconImage(image.getAWTImage());
