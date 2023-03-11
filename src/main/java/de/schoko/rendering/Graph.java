@@ -36,7 +36,7 @@ public class Graph {
 		this.zoom = camera.getZoom();
 		this.camX = (int) (camera.getX() * zoom);
 		this.camY = (int) -(camera.getY() * zoom);
-		this.hud = new HUDGraph(g2D, width, height);
+		this.hud = new HUDGraph(g2D, panel.getWidth(), panel.getHeight());
 		g2D.setColor(rendererSettings.getBackgroundColor());
 		g2D.fillRect(0, 0, width, height);
 		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
