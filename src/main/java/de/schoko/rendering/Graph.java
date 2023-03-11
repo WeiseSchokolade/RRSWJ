@@ -43,9 +43,9 @@ public class Graph {
 		
 		if (rendererSettings.isRenderingCoordinateSystem()) {
 			g2D.setColor(Color.BLUE);
-			g2D.drawLine(width / 2 - camX, 0, width / 2 - camX, height);
+			g2D.drawLine(width / 2 - camX + drawXOffset, drawYOffset, width / 2 - camX + drawXOffset, height + drawYOffset);
 			g2D.setColor(Color.RED);
-			g2D.drawLine(0, height / 2 - camY, width, height / 2 - camY);
+			g2D.drawLine(drawXOffset, height / 2 - camY + drawYOffset, width + drawXOffset, height / 2 - camY + drawYOffset);
 			for (int i = -10; i <= 10; i++) {
 				if (i == 0) continue;
 				drawLine(i, 0.1, i, -0.1, Color.RED);
@@ -278,11 +278,11 @@ public class Graph {
 	}
 	
 	public double convBackFromSX(double x) {
-		return ((x + camX) - width / 2) / zoom;
+		return ((x - drawXOffset + camX) - width / 2) / zoom;
 	}
 	
 	public double convBackFromSY(double y) {
-		return ((y + camY) - height / 2) / -zoom;
+		return ((y - drawYOffset + camY) - height / 2) / -zoom;
 	}
 
     public int convSW(double w) {
