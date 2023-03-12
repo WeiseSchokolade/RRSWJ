@@ -1,6 +1,6 @@
 package de.schoko.rendering;
 
-class DefaultViewport implements Viewport {
+public class DefaultViewport implements Viewport {
 	private Panel panel;
 	
 	public DefaultViewport(Panel panel) {
