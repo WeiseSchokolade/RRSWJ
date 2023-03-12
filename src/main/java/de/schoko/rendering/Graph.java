@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -210,11 +211,28 @@ public class Graph {
 	 * @param y0
 	 * @param x1
 	 * @param y1
-	 * @param c
+	 * @param c Color of the line
 	 */
 	public void drawLine(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
+	}
+
+	/**
+	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color and the stroke width in pixels
+	 * @param x0
+	 * @param y0
+	 * @param x1
+	 * @param y1
+	 * @param c Color of the line
+	 * @param strokeWidth Width of line in pixels.
+	 */
+	public void drawLine(double x0, double y0, double x1, double y1, Color c, float strokeWidth) {
+		Stroke prevStroke = g2D.getStroke();
+		g2D.setStroke(new BasicStroke(strokeWidth));
+		g2D.setColor(c);
+		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
+		g2D.setStroke(prevStroke);
 	}
 	
 	public void drawRect(double x0, double y0, double x1, double y1) {
