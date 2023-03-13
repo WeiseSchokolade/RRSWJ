@@ -77,11 +77,13 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		pressed[e.getButton()] = true;
+		recentlyPressed[e.getButton()] = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		pressed[e.getButton()] = false;
+		recentlyPressed[e.getButton()] = false;
 	}
 
 	@Override
