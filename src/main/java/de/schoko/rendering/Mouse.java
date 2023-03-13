@@ -12,6 +12,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	
 	private int x, y;
 	private boolean[] pressed = new boolean[MouseInfo.getNumberOfButtons() + 1];
+	private boolean[] recentlyPressed = new boolean[pressed.length];
 	private boolean inPanel = false;
 	private Context context;
 	
@@ -50,6 +51,19 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	
 	public boolean isPressed(int buttonNumber) {
 		return pressed[buttonNumber];
+	}
+
+	/**
+	 * Checks whether the given button is pressed once. Marks it as not recently pressed.
+	 * @param keyCode The button to be checked
+	 * @return Whether the button was recently pressed
+	 */
+	public boolean wasRecentlyPressed(int buttonNumber) {
+		if (recentlyPressed[buttonNumber]) {
+			recentlyPressed[buttonNumber] = false;
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isInPanel() {

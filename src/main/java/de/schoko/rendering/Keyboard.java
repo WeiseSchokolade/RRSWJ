@@ -129,7 +129,7 @@ public class Keyboard {
 	}
 	
 	/**
-	 * Checks whether the given key is pressed once.
+	 * Checks whether the given key is pressed once. Marks it as not recently pressed.
 	 * @param keyCode The key to be checked
 	 * @return Whether the key was recently pressed
 	 */
@@ -137,8 +137,7 @@ public class Keyboard {
 		if (recentlyPressedKeys[keyCode]) {
 			recentlyPressedKeys[keyCode] = false;
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 }
