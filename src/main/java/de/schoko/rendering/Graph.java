@@ -241,7 +241,19 @@ public class Graph {
 	
 	public void drawRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
-		g2D.drawRect(convSX(x0), convSY(y1), convSW(x1 - x0), convSH(y1 - y0));
+		double ax0 = x0;
+		double ax1 = x1;
+		double ay0 = y0;
+		double ay1 = y1;
+		if (x0 > x1) {
+			ax0 = x1;
+			ax1 = x0;
+		}
+		if (y0 > y1) {
+			ay0 = y1;
+			ay1 = y0;
+		}
+		g2D.drawRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
 	}
 	
 	public void fillRect(double x0, double y0, double x1, double y1) {
@@ -250,7 +262,19 @@ public class Graph {
 	
 	public void fillRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
-		g2D.fillRect(convSX(x0), convSY(y1), convSW(x1 - x0), convSH(y1 - y0));
+		double ax0 = x0;
+		double ax1 = x1;
+		double ay0 = y0;
+		double ay1 = y1;
+		if (x0 > x1) {
+			ax0 = x1;
+			ax1 = x0;
+		}
+		if (y0 > y1) {
+			ay0 = y1;
+			ay1 = y0;
+		}
+		g2D.fillRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
 	}
 
 	public void drawImage(Image image, double x, double y, double scale) {
