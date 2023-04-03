@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel {
 	private static final long serialVersionUID = -2898023849852442454L;
-	private static final long FPS_CAP = 1;
 	private boolean instanciated = false;
     private double lastRun;
 
@@ -68,12 +67,13 @@ public class Panel extends JPanel {
 				}
 				e.printStackTrace();
 			}
+			context.getMouse().update();
+			context.getKeyboard().update();
 			graph.finalize();
-			
 		}
-		if (FPS_CAP > 0) {
+		if (rendererSettings.getFPSCap() > 0) {
         	try {
-            	Thread.sleep(FPS_CAP);
+            	Thread.sleep(rendererSettings.getFPSCap());
         	} catch (InterruptedException e) {
         		e.printStackTrace();
         		assert false : "Couldn't cap FPS";

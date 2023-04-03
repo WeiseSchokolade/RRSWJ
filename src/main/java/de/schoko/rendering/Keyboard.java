@@ -104,6 +104,15 @@ public class Keyboard {
 			return false;
 		});
 	}
+	
+	/**
+	 * Marks all recently pressed keys as not pressed
+	 */
+	protected void update() {
+		for (int i = 0; i < recentlyPressedKeys.length; i++) {
+			recentlyPressedKeys[i] = false;
+		}
+	}
 
 	/**
 	 * Checks whether the given key is being pressed
@@ -129,15 +138,11 @@ public class Keyboard {
 	}
 	
 	/**
-	 * Checks whether the given key is pressed once. Marks it as not recently pressed.
+	 * Checks whether the given key was pressed since the last frame.
 	 * @param keyCode The key to be checked
 	 * @return Whether the key was recently pressed
 	 */
 	public boolean wasRecentlyPressed(int keyCode) {
-		if (recentlyPressedKeys[keyCode]) {
-			recentlyPressedKeys[keyCode] = false;
-			return true;
-		}
-		return false;
+		return recentlyPressedKeys[keyCode];
 	}
 }
