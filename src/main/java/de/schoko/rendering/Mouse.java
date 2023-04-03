@@ -22,6 +22,15 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 	
 	/**
+	 * Marks all recently pressed keys as not pressed
+	 */
+	protected void update() {
+		for (int i = 0; i < recentlyPressed.length; i++) {
+			recentlyPressed[i] = false;
+		}
+	}
+	
+	/**
 	 * @return The x position of the mouse in the coordinate system
 	 */
 	public double getX() {
@@ -54,16 +63,12 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 
 	/**
-	 * Checks whether the given button is pressed once. Marks it as not recently pressed.
+	 * Checks whether the given button was pressed since the last frame.
 	 * @param keyCode The button to be checked
 	 * @return Whether the button was recently pressed
 	 */
 	public boolean wasRecentlyPressed(int buttonNumber) {
-		if (recentlyPressed[buttonNumber]) {
-			recentlyPressed[buttonNumber] = false;
-			return true;
-		}
-		return false;
+		return recentlyPressed[buttonNumber];
 	}
 	
 	public boolean isInPanel() {
