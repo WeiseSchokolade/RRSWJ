@@ -8,6 +8,7 @@ public class RendererSettings {
 	private Color backgroundColor;
 	private boolean crashOnException;
 	private boolean displayStartedNotification;
+	private long fpsCap;
 	private boolean maximizedByDefault;
 	private boolean renderCoordinateSystem;
 	private Image windowIcon;
@@ -20,6 +21,7 @@ public class RendererSettings {
 		backgroundColor = Color.LIGHT_GRAY;
 		crashOnException = true;
 		displayStartedNotification = true;
+		fpsCap = 1;
 		renderCoordinateSystem = true;
 		windowResizable = true;
 	}
@@ -104,6 +106,18 @@ public class RendererSettings {
 	 */
 	public void setDisplayStartedNotification(boolean displayStartedNotification) {
 		this.displayStartedNotification = displayStartedNotification;
+	}
+	
+	public long getFPSCap() {
+		return fpsCap;
+	}
+	
+	/**
+	 * Sets how long RRSWJ should wait before drawing the next frame in milliseconds. Defaults to 1 millisecond.
+	 * @param fpsCap
+	 */
+	public void setFPSCap(long fpsCap) {
+		this.fpsCap = fpsCap;
 	}
 	
 	public boolean isMaximizedByDefault() {
