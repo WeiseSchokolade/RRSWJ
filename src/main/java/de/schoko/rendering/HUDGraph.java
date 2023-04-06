@@ -37,7 +37,11 @@ public class HUDGraph {
 	}
 	
 	public void drawText(String s, double x, double y, Color color, Font font) {
-		drawCalls.add(new TextDrawCall(s, x, y, color, font));
+		drawText(s, x, y, color, font, TextAlignment.LEFT);
+	}
+	
+	public void drawText(String s, double x, double y, Color color, Font font, TextAlignment textAlignment) {
+		drawCalls.add(new TextDrawCall(s, x, y, color, font, textAlignment));
 	}
 	
 	public void drawRect(double x, double y, double width, double height, Color fillColor) {
