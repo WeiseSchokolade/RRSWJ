@@ -71,6 +71,7 @@ public class Keyboard {
 			CAPS_LOCK = KeyEvent.VK_CAPS_LOCK,
 			UNDERSCORE = KeyEvent.VK_UNDERSCORE,
 			ASTERISK = KeyEvent.VK_ASTERISK,
+			SEMICOLON = KeyEvent.VK_SEMICOLON,
 			F1 = KeyEvent.VK_F1,
 			F2 = KeyEvent.VK_F2,
 			F3 = KeyEvent.VK_F3,
