@@ -67,6 +67,7 @@ public class Keyboard {
 			DOWN = KeyEvent.VK_DOWN,
 			RIGHT = KeyEvent.VK_RIGHT,
 			BACK_SPACE = KeyEvent.VK_BACK_SPACE,
+			SHIFT = KeyEvent.VK_SHIFT,
 			CAPS_LOCK = KeyEvent.VK_CAPS_LOCK,
 			UNDERSCORE = KeyEvent.VK_UNDERSCORE,
 			ASTERISK = KeyEvent.VK_ASTERISK,
