@@ -26,14 +26,16 @@ public class Graph {
 	private double zoom = 50;
 	private ArrayList<String> debugStrings;
 	private HUDGraph hud;
+	private Viewport viewport;
 	
 	public Graph(Panel panel, Graphics gEntered, Camera camera, RendererSettings rendererSettings) {
 		this.panel = panel;
 		this.g2D = (Graphics2D) gEntered;
-		this.drawXOffset = camera.getViewport().getDrawXOffset();
-		this.drawYOffset = camera.getViewport().getDrawYOffset();
-		this.width = camera.getViewport().getWidth();
-		this.height = camera.getViewport().getHeight();
+		this.viewport = camera.getViewport();
+		this.drawXOffset = viewport.getDrawXOffset();
+		this.drawYOffset = viewport.getDrawYOffset();
+		this.width = viewport.getWidth();
+		this.height = viewport.getHeight();
 		this.zoom = camera.getZoom();
 		this.camX = (int) (camera.getX() * zoom);
 		this.camY = (int) -(camera.getY() * zoom);
@@ -359,6 +361,10 @@ public class Graph {
     
     public HUDGraph getHUD() {
     	return hud;
+    }
+    
+    public Viewport getViewport() {
+    	return viewport;
     }
     
     public Graphics2D getAWTGraphics() {
