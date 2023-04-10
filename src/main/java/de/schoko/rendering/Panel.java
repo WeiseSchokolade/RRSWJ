@@ -67,9 +67,9 @@ public class Panel extends JPanel {
 				}
 				e.printStackTrace();
 			}
+			graph.finalize();
 			context.getMouse().update();
 			context.getKeyboard().update();
-			graph.finalize();
 		}
 		if (rendererSettings.getFPSCap() > 0) {
         	try {

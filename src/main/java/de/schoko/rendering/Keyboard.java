@@ -4,13 +4,12 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
 public class Keyboard {
-	private static final int RECENTLY_PRESSED_KEY_VALUE = 2;
 	private boolean pressedKeys[] = new boolean[550];
 	/**
-	 * A key gets set to 2 when it is pressed.
-	 * Every {@link Keyboard#update()} call it's value get's reduced by one
+	 * A key gets set to true when it is pressed.
+	 * Every time {@link Keyboard#update()} get's called every value is set to false
 	 */
-	private int recentlyPressedKeys[] = new int[550];
+	private boolean recentlyPressedKeys[] = new boolean[550];
 
 	public static final int ZERO = KeyEvent.VK_0,
 			ONE = KeyEvent.VK_1,
@@ -103,10 +102,10 @@ public class Keyboard {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(event -> {
 			if (event.getID() == KeyEvent.KEY_PRESSED) {
 				pressedKeys[event.getKeyCode()] = true;
-				recentlyPressedKeys[event.getKeyCode()] = RECENTLY_PRESSED_KEY_VALUE;
+				recentlyPressedKeys[event.getKeyCode()] = true;
 			} else if (event.getID() == KeyEvent.KEY_RELEASED) {
 				pressedKeys[event.getKeyCode()] = false;
-				recentlyPressedKeys[event.getKeyCode()] = 0;
+				recentlyPressedKeys[event.getKeyCode()] = false;
 			}
 			return false;
 		});
@@ -115,11 +114,9 @@ public class Keyboard {
 	/**
 	 * Marks all recently pressed keys as not pressed
 	 */
-	protected void update() {
+	public void update() {
 		for (int i = 0; i < recentlyPressedKeys.length; i++) {
-			if (recentlyPressedKeys[i] > 0) {
-				recentlyPressedKeys[i]--;
-			}
+			recentlyPressedKeys[i] = false;
 		}
 	}
 
@@ -152,6 +149,6 @@ public class Keyboard {
 	 * @return Whether the key was recently pressed
 	 */
 	public boolean wasRecentlyPressed(int keyCode) {
-		return recentlyPressedKeys[keyCode] > 0;
+		return recentlyPressedKeys[keyCode];
 	}
 }
