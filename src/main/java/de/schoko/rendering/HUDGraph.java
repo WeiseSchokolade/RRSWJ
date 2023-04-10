@@ -9,6 +9,7 @@ import de.schoko.rendering.hud.BarDrawCall;
 import de.schoko.rendering.hud.CircleDrawCall;
 import de.schoko.rendering.hud.DrawCall;
 import de.schoko.rendering.hud.ImageDrawCall;
+import de.schoko.rendering.hud.LineDrawCall;
 import de.schoko.rendering.hud.RectDrawCall;
 import de.schoko.rendering.hud.TextDrawCall;
 
@@ -58,6 +59,10 @@ public class HUDGraph {
 	
 	public void drawCircle(double x, double y, double radius, Color color) {
 		drawCalls.add(new CircleDrawCall(x, y, radius, color));
+	}
+	
+	public void drawLine(double x0, double y0, double x1, double y1, Color color) {
+		drawCalls.add(new LineDrawCall(x0, y0, x1, y1, color));
 	}
 	
 	public double getWidth() {
