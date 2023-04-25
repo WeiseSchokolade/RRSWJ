@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
@@ -290,14 +289,31 @@ public class Graph {
 		area.fillRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
 		area.dispose();
 	}
-	
+
 	public void drawImage(Image image, double x, double y, double scale) {
+		int imgWidth = (int) convSW(image.getWidth() / scale);
+		int imgHeight = (int) convSH(image.getHeight() / scale);
+		g2D.drawImage(image.getAWTImage(), convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
+	}
+	
+	public void drawImage(java.awt.Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth(null) / scale);
 		int imgHeight = (int) convSH(image.getHeight(null) / scale);
 		g2D.drawImage(image, convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
 	}
-	
+
 	public void drawRotatedImage(Image image, double x, double y, double scale, double degrees) {
+		double imgWidth = convSW(image.getWidth() / scale);
+		double imgHeight = convSH(image.getHeight() / scale);
+		int areaSize = (int) (imgWidth > imgHeight ? imgWidth * 2 : imgHeight * 2);
+		Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) imgWidth, convSY(y) - (int) imgHeight, (int) areaSize, (int) areaSize);
+		double angle = convSA(degrees);
+		area.rotate(angle, imgWidth, imgHeight);
+		area.drawImage(image.getAWTImage(), (int) (imgWidth / 2), (int) (imgHeight / 2), (int) imgWidth, (int) imgHeight, null);
+		area.dispose();
+	}
+	
+	public void drawRotatedImage(java.awt.Image image, double x, double y, double scale, double degrees) {
 		double imgWidth = convSW(image.getWidth(null) / scale);
 		double imgHeight = convSH(image.getHeight(null) / scale);
 		int areaSize = (int) (imgWidth > imgHeight ? imgWidth * 2 : imgHeight * 2);
