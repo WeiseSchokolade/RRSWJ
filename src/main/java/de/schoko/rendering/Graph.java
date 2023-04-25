@@ -301,10 +301,10 @@ public class Graph {
 		double imgWidth = convSW(image.getWidth(null) / scale);
 		double imgHeight = convSH(image.getHeight(null) / scale);
 		int areaSize = (int) (imgWidth > imgHeight ? imgWidth * 2 : imgHeight * 2);
-		Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) imgWidth / 2, convSY(y) - (int) imgHeight / 2, (int) areaSize, (int) areaSize);
+		Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) imgWidth, convSY(y) - (int) imgHeight, (int) areaSize, (int) areaSize);
 		double angle = convSA(degrees);
-		area.rotate(angle, imgWidth / 2, imgHeight / 2);
-		area.drawImage(image, 0, 0, (int) imgWidth, (int) imgHeight, null);
+		area.rotate(angle, imgWidth, imgHeight);
+		area.drawImage(image, (int) (imgWidth / 2), (int) (imgHeight / 2), (int) imgWidth, (int) imgHeight, null);
 		area.dispose();
 	}
 	
