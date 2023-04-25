@@ -291,7 +291,6 @@ public class Graph {
 		area.dispose();
 	}
 	
-
 	public void drawImage(Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth(null) / scale);
 		int imgHeight = (int) convSH(image.getHeight(null) / scale);
@@ -346,8 +345,16 @@ public class Graph {
         return (int) (zoom * w);
     }
     
+    public double convBackFromSW(double w) {
+    	return zoom * w;
+    }
+    
     public int convSH(double h) {
         return (int) (zoom * h);
+    }
+    
+    public double convBackFromSH(double h) {
+    	return zoom * h;
     }
     
     /**
