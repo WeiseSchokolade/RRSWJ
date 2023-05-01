@@ -16,6 +16,7 @@ public class Panel extends JPanel {
 	private Renderer renderer;
 	private RendererSettings rendererSettings;
 	private Context context;
+	private GraphTransform graphTransform;
 	
 	private List<Notification> notifications;
     
@@ -29,6 +30,7 @@ public class Panel extends JPanel {
 		} else {
 			camera = new Camera(0, 0, 50, new DefaultViewport(this));
 		}
+		this.graphTransform = rendererSettings.getGraphTransform();
 		this.notifications = new ArrayList<>();
 		if (rendererSettings.isDisplayingStartedNotification()) {
 			notifications.add(new Notification("Started", 5));
@@ -55,7 +57,7 @@ public class Panel extends JPanel {
 		});
 		
 		if (renderer != null) {
-			Graph graph = new Graph(this, g, camera, rendererSettings);
+			Graph graph = new Graph(this, g, camera, rendererSettings, graphTransform);
 			context.setLastGraph(graph);
 			
 			try {
@@ -96,5 +98,9 @@ public class Panel extends JPanel {
 	
 	public void setContext(Context context) {
 		this.context = context;
+	}
+	
+	public void setGraphTransform(GraphTransform graphTransform) {
+		this.graphTransform = graphTransform;
 	}
 }

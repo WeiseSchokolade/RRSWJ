@@ -9,6 +9,7 @@ public class RendererSettings {
 	private boolean crashOnException;
 	private boolean displayStartedNotification;
 	private long fpsCap;
+	private GraphTransform graphTransform;
 	private boolean maximizedByDefault;
 	private boolean renderCoordinateSystem;
 	private Image windowIcon;
@@ -21,6 +22,7 @@ public class RendererSettings {
 		backgroundColor = Color.LIGHT_GRAY;
 		crashOnException = true;
 		displayStartedNotification = true;
+		graphTransform = new GraphMathTransform();
 		fpsCap = 1;
 		renderCoordinateSystem = true;
 		windowResizable = true;
@@ -106,6 +108,21 @@ public class RendererSettings {
 	 */
 	public void setDisplayStartedNotification(boolean displayStartedNotification) {
 		this.displayStartedNotification = displayStartedNotification;
+	}
+	
+	public GraphTransform getGraphTransform() {
+		return graphTransform;
+	}
+	
+	/**
+	 * Changes how to transform application x/y coordinates to screen x/y coordinates
+	 * @param graphTransform
+	 */
+	public void setGraphTransform(GraphTransform graphTransform) {
+		this.graphTransform = graphTransform;
+		if (window.isOpen()) {
+			window.getPanel().setGraphTransform(graphTransform);
+		}
 	}
 	
 	public long getFPSCap() {

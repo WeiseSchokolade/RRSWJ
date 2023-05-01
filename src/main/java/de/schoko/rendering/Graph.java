@@ -19,35 +19,32 @@ public class Graph {
 	
 	private Panel panel;
 	private Graphics2D g2D;
-	private int drawXOffset, drawYOffset;
-	private int width, height;
-	private int camX, camY;
-	private double zoom = 50;
 	private ArrayList<String> debugStrings;
 	private HUDGraph hud;
 	private Viewport viewport;
+	private GraphTransform transform;
 	
-	public Graph(Panel panel, Graphics gEntered, Camera camera, RendererSettings rendererSettings) {
+	public Graph(Panel panel, Graphics gEntered, Camera camera, RendererSettings rendererSettings, GraphTransform transform) {
 		this.panel = panel;
 		this.g2D = (Graphics2D) gEntered;
 		this.viewport = camera.getViewport();
-		this.drawXOffset = viewport.getDrawXOffset();
-		this.drawYOffset = viewport.getDrawYOffset();
-		this.width = viewport.getWidth();
-		this.height = viewport.getHeight();
-		this.zoom = camera.getZoom();
-		this.camX = (int) (camera.getX() * zoom);
-		this.camY = (int) -(camera.getY() * zoom);
+		this.transform = transform;
+		this.transform.setGTC(new GraphTransformContext(
+				viewport.getDrawXOffset(),
+				viewport.getDrawYOffset(),
+				(int) (camera.getX() * camera.getZoom()),
+				(int) -(camera.getY() * camera.getZoom()),
+				viewport.getWidth(),
+				viewport.getHeight(),
+				camera.getZoom()));
 		this.hud = new HUDGraph(g2D, panel.getWidth(), panel.getHeight());
 		g2D.setColor(rendererSettings.getBackgroundColor());
-		g2D.fillRect(drawXOffset, drawYOffset, width, height);
+		g2D.fillRect(viewport.getDrawXOffset(), viewport.getDrawYOffset(), viewport.getWidth(), viewport.getHeight());
 		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
 		
 		if (rendererSettings.isRenderingCoordinateSystem()) {
-			g2D.setColor(Color.BLUE);
-			g2D.drawLine(width / 2 - camX + drawXOffset, drawYOffset, width / 2 - camX + drawXOffset, height + drawYOffset);
-			g2D.setColor(Color.RED);
-			g2D.drawLine(drawXOffset, height / 2 - camY + drawYOffset, width + drawXOffset, height / 2 - camY + drawYOffset);
+			drawLine(0, 10, 0, -10, Color.BLUE);
+			drawLine(-10, 0, 10, 0, Color.RED);
 			for (int i = -10; i <= 10; i++) {
 				if (i == 0) continue;
 				drawLine(i, 0.1, i, -0.1, Color.RED);
@@ -104,9 +101,9 @@ public class Graph {
 			Notification n = notifications.get(i);
 			int stringWidth = g2D.getFontMetrics().stringWidth(n.getMessage());
 			g2D.setColor(new Color(0.1f, 0.1f, 0.1f, 0.1f));
-			g2D.fillRect((int) (width / 2 - stringWidth / 2 - boxMargin), (int) (offset - NOTIFICATION_FONT_SIZE - boxMargin), (int) (stringWidth + boxMargin * 2), (int) (notificationHeight + boxMargin));
+			g2D.fillRect((int) (hud.getWidth() / 2 - stringWidth / 2 - boxMargin), (int) (offset - NOTIFICATION_FONT_SIZE - boxMargin), (int) (stringWidth + boxMargin * 2), (int) (notificationHeight + boxMargin));
 			g2D.setColor(Color.BLACK);
-			g2D.drawString(n.getMessage(), width / 2 - stringWidth / 2, (int) offset);
+			g2D.drawString(n.getMessage(), (int) (hud.getWidth() / 2 - stringWidth / 2), (int) offset);
 			offset -= notificationHeight + boxOffset;
 		}
 		
@@ -342,35 +339,35 @@ public class Graph {
 	}
 	
 	public int convSX(double x) {
-		return (int) (x * zoom + width / 2) - camX + drawXOffset;
+		return transform.convSX(x);
 	}
 	
 	public int convSY(double y) {
-		return (int) (y * -zoom + height / 2) - camY + drawYOffset;
+		return transform.convSY(y);
 	}
 	
 	public double convBackFromSX(double x) {
-		return ((x - drawXOffset + camX) - width / 2) / zoom;
+		return transform.convBackFromSX(x);
 	}
 	
 	public double convBackFromSY(double y) {
-		return ((y - drawYOffset + camY) - height / 2) / -zoom;
+		return transform.convBackFromSY(y);
 	}
 
     public int convSW(double w) {
-        return (int) (zoom * w);
+    	return transform.convSW(w);
     }
     
     public double convBackFromSW(double w) {
-    	return zoom * w;
+    	return transform.convBackFromSW(w);
     }
     
     public int convSH(double h) {
-        return (int) (zoom * h);
+    	return transform.convSH(h);
     }
     
     public double convBackFromSH(double h) {
-    	return zoom * h;
+    	return transform.convBackFromSH(h);
     }
     
     /**
