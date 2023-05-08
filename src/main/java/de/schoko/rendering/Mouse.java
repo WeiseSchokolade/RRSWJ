@@ -4,13 +4,16 @@ import java.awt.MouseInfo;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
-public class Mouse implements MouseListener, MouseMotionListener {
+public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
 	public static final int LEFT_BUTTON = MouseEvent.BUTTON1;
 	public static final int RIGHT_BUTTON = MouseEvent.BUTTON2;
 	public static final int MIDDLE_BUTTON = MouseEvent.BUTTON3;
 	
 	private int x, y;
+	private double mouseWheelClicks;
 	private boolean[] pressed = new boolean[MouseInfo.getNumberOfButtons() + 1];
 	private boolean[] recentlyPressed = new boolean[pressed.length];
 	private boolean[] recentlyReleased = new boolean[pressed.length];
@@ -20,6 +23,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public Mouse(Panel panel) {
 		panel.addMouseListener(this);
 		panel.addMouseMotionListener(this);
+		panel.addMouseWheelListener(this);
 	}
 	
 	/**
@@ -58,6 +62,14 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	 */
 	public double getScreenY() {
 		return y;
+	}
+	
+	/**
+	 * @return The rotation of the mouse wheel.
+	 * @see MouseWheelEvent#getUnitsToScroll()
+	 */
+	public double getMouseWheelClicks() {
+		return mouseWheelClicks;
 	}
 	
 	public boolean isPressed(int buttonNumber) {
@@ -128,5 +140,10 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	
 	public void setContext(Context context) {
 		this.context = context;
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		mouseWheelClicks += e.getUnitsToScroll();
 	}
 }
