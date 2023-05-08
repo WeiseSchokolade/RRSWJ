@@ -13,6 +13,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	private int x, y;
 	private boolean[] pressed = new boolean[MouseInfo.getNumberOfButtons() + 1];
 	private boolean[] recentlyPressed = new boolean[pressed.length];
+	private boolean[] recentlyReleased = new boolean[pressed.length];
 	private boolean inPanel = false;
 	private Context context;
 	
@@ -27,6 +28,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	protected void update() {
 		for (int i = 0; i < recentlyPressed.length; i++) {
 			recentlyPressed[i] = false;
+			recentlyReleased[i] = false;
 		}
 	}
 	
@@ -67,8 +69,17 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	 * @param keyCode The button to be checked
 	 * @return Whether the button was recently pressed
 	 */
-	public boolean wasRecentlyPressed(int buttonNumber) {
-		return recentlyPressed[buttonNumber];
+	public boolean wasRecentlyPressed(int keyCode) {
+		return recentlyPressed[keyCode];
+	}
+	
+	/**
+	 * Checks whether the given button was released since the last frame.
+	 * @param keyCode The button to be checked
+	 * @return Whether the button was recently released
+	 */
+	public boolean wasRecentlyReleased(int keyCode) {
+		return recentlyReleased[keyCode];
 	}
 	
 	public boolean isInPanel() {
@@ -83,12 +94,14 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public void mousePressed(MouseEvent e) {
 		pressed[e.getButton()] = true;
 		recentlyPressed[e.getButton()] = true;
+		recentlyReleased[e.getButton()] = false;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		pressed[e.getButton()] = false;
 		recentlyPressed[e.getButton()] = false;
+		recentlyReleased[e.getButton()] = true;
 	}
 
 	@Override
