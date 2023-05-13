@@ -5,11 +5,11 @@ package de.schoko.rendering;
  */
 public class GraphMathTransform extends GraphTransform {
 	public int convSX(double x) {
-		return (int) (x * gtc.zoom + gtc.width / 2) - gtc.camX + gtc.drawXOffset;
+		return (int) Math.round(x * gtc.zoom + gtc.width / 2) - gtc.camX + gtc.drawXOffset;
 	}
 	
 	public int convSY(double y) {
-		return (int) (y * -gtc.zoom + gtc.height / 2) - gtc.camY + gtc.drawYOffset;
+		return (int) Math.round(y * -gtc.zoom + gtc.height / 2) - gtc.camY + gtc.drawYOffset;
 	}
 	
 	public double convBackFromSX(double x) {
@@ -21,7 +21,7 @@ public class GraphMathTransform extends GraphTransform {
 	}
 
     public int convSW(double w) {
-        return (int) (gtc.zoom * w);
+        return (int) Math.round(gtc.zoom * w);
     }
     
     public double convBackFromSW(double w) {
@@ -29,7 +29,7 @@ public class GraphMathTransform extends GraphTransform {
     }
     
     public int convSH(double h) {
-        return (int) (gtc.zoom * h);
+        return (int) Math.round(gtc.zoom * h);
     }
     
     public double convBackFromSH(double h) {
