@@ -64,6 +64,10 @@ public class HUDGraph {
 	public void drawLine(double x0, double y0, double x1, double y1, Color color) {
 		drawCalls.add(new LineDrawCall(x0, y0, x1, y1, color));
 	}
+
+	public void drawLine(double x0, double y0, double x1, double y1, Color color, float width) {
+		drawCalls.add(new LineDrawCall(x0, y0, x1, y1, color, width));
+	}
 	
 	public double getWidth() {
 		return width;
