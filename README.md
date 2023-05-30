@@ -21,3 +21,20 @@ RRSWJ renders stuff with java
   </dependency>
 </dependencies>
 ```
+
+## Example
+
+Example: Open a window and draw a coordinate system.
+```java
+public class MathGrid extends Renderer {
+	public static void main(String[] args) {
+		Window window = new Window(new MathGrid(), "Math Grid");
+		window.open();
+	}
+
+	@Override
+	public void render(Graph g, double deltaTimeMS) {
+		g.drawRect(0, 0, 1, 1);
+	}
+}
+```
