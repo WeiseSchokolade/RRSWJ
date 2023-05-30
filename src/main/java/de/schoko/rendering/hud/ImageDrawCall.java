@@ -6,21 +6,29 @@ import de.schoko.rendering.Image;
 
 public class ImageDrawCall extends DrawCall {
 	private double x, y;
-	private Image image;
-	private double scale;
+	private java.awt.Image image;
+	private int imageWidth;
+	private int imageHeight;
+	
+	public ImageDrawCall(double x, double y, java.awt.Image image, double scale) {
+		this.x = x;
+		this.y = y;
+		this.image = image;
+		imageWidth = (int) (image.getWidth(null) / scale);
+		imageHeight = (int) (image.getHeight(null) / scale);
+	}
 	
 	public ImageDrawCall(double x, double y, Image image, double scale) {
 		this.x = x;
 		this.y = y;
-		this.image = image;
-		this.scale = scale;
+		this.image = image.getAWTImage();
+		imageWidth = (int) (image.getWidth() / scale);
+		imageHeight = (int) (image.getHeight() / scale);
 	}
 	
 	@Override
 	public void call(Graphics2D g2D) {
-		int imageWidth = (int) (image.getWidth() / scale);
-		int imageHeight = (int) (image.getHeight() / scale);
-		g2D.drawImage(image.getAWTImage(), (int) x, (int) y, imageWidth, imageHeight, null);
+		g2D.drawImage(image, (int) x, (int) y, imageWidth, imageHeight, null);
 	}
 
 }

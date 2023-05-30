@@ -52,7 +52,19 @@ public class HUDGraph {
 	public void drawBar(double x, double y, double width, double height, double perc, Color innerColor, Color outerColor) {
 		drawCalls.add(new BarDrawCall(x, y, width, height, perc, innerColor, outerColor));
 	}
+
+	/**
+	 * Draws java.awt.Image
+	 * @see java.awt.Image
+	 */
+	public void drawImage(double x, double y, java.awt.Image image, double scale) {
+		drawCalls.add(new ImageDrawCall(x, y, image, scale));
+	}
 	
+	/**
+	 * Draws de.schoko.rendering.Image
+	 * @see de.schoko.rendering.Image
+	 */
 	public void drawImage(double x, double y, Image image, double scale) {
 		drawCalls.add(new ImageDrawCall(x, y, image, scale));
 	}
