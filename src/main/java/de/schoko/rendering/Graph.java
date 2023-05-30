@@ -301,16 +301,38 @@ public class Graph {
 		g2D.fillRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
 	}
 
+	public void drawRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.drawRect(convSX(x), convSY(y), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			int areaSize = (int) (drawnWidth > drawnHeight ? drawnWidth * 2 : drawnHeight * 2);
+			Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) drawnWidth, convSY(y) - (int) drawnHeight, (int) areaSize, (int) areaSize);
+			double angle = convSA(-degrees);
+			area.rotate(angle, areaSize / 2, areaSize / 2);
+			area.setColor(c);
+			area.drawRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
+	}
+
 	public void fillRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
-		double drawnWidth = convSW(width);
-		double drawnHeight = convSH(height);
-		int areaSize = (int) (drawnWidth > drawnHeight ? drawnWidth * 2 : drawnHeight * 2);
-		Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) drawnWidth, convSY(y) - (int) drawnHeight, (int) areaSize, (int) areaSize);
-		double angle = convSA(-degrees);
-		area.rotate(angle, areaSize / 2, areaSize / 2);
-		area.setColor(c);
-		area.fillRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
-		area.dispose();
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.fillRect(convSX(x), convSY(y), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			int areaSize = (int) (drawnWidth > drawnHeight ? drawnWidth * 2 : drawnHeight * 2);
+			Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) drawnWidth, convSY(y) - (int) drawnHeight, (int) areaSize, (int) areaSize);
+			double angle = convSA(-degrees);
+			area.rotate(angle, areaSize / 2, areaSize / 2);
+			area.setColor(c);
+			area.fillRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
 	}
 
 	public void drawImage(Image image, double x, double y, double scale) {

@@ -27,7 +27,7 @@ public class Rectangle extends Shape {
 	
 	@Override
 	public void render(Graph g) {
-		g.drawRect(x, y, x + width, y + height, fillColor);
+		g.drawRotatedRect(x, y, width, height, 0, fillColor);
 	}
 
 	public double getX() {
