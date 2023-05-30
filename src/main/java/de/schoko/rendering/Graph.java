@@ -200,7 +200,7 @@ public class Graph {
 	 * @param x1
 	 * @param y1
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void drawLine(double x0, double y0, double x1, double y1) {
 		drawLine(x0, y0, x1, y1, Color.BLACK);
 	}
@@ -214,7 +214,7 @@ public class Graph {
 	 * @param y1
 	 * @param c Color of the line
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void drawLine(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
@@ -230,7 +230,7 @@ public class Graph {
 	 * @param c Color of the line
 	 * @param strokeWidth Width of line in pixels.
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void drawLine(double x0, double y0, double x1, double y1, Color c, float strokeWidth) {
 		Stroke prevStroke = g2D.getStroke();
 		g2D.setStroke(new BasicStroke(strokeWidth));
@@ -243,7 +243,7 @@ public class Graph {
 	 * @deprecated This method will be changed to use width and height (dependant on zoom)
 	 * 	instead of x1 and y1.
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void drawRect(double x0, double y0, double x1, double y1) {
 		drawRect(x0, y0, x1, y1, Color.BLACK);
 	}
@@ -252,7 +252,7 @@ public class Graph {
 	 * @deprecated This method will be changed to use width and height (dependant on zoom)
 	 * 	instead of x1 and y1.
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void drawRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		double ax0 = x0;
@@ -274,7 +274,7 @@ public class Graph {
 	 * @deprecated This method will be changed to use width and height (dependant on zoom)
 	 * 	instead of x1 and y1.
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void fillRect(double x0, double y0, double x1, double y1) {
 		fillRect(x0, y0, x1, y1, Color.BLACK);
 	}
@@ -283,7 +283,7 @@ public class Graph {
 	 * @deprecated This method will be changed to use width and height (dependant on zoom)
 	 * 	instead of x1 and y1.
 	 */
-	@Deprecated(forRemoval = false)
+	@Deprecated
 	public void fillRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		double ax0 = x0;
