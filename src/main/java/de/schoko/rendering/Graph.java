@@ -194,23 +194,27 @@ public class Graph {
 	
 	/**
 	 * Draws a line between the points (x0, y0) and (x1, y1) with the color Black
+	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 */
+	@Deprecated(forRemoval = false)
 	public void drawLine(double x0, double y0, double x1, double y1) {
 		drawLine(x0, y0, x1, y1, Color.BLACK);
 	}
 	
 	/**
 	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color
+	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 * @param c Color of the line
 	 */
+	@Deprecated(forRemoval = false)
 	public void drawLine(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
@@ -218,6 +222,7 @@ public class Graph {
 
 	/**
 	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color and the stroke width in pixels
+	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
 	 * @param x0
 	 * @param y0
 	 * @param x1
@@ -225,6 +230,7 @@ public class Graph {
 	 * @param c Color of the line
 	 * @param strokeWidth Width of line in pixels.
 	 */
+	@Deprecated(forRemoval = false)
 	public void drawLine(double x0, double y0, double x1, double y1, Color c, float strokeWidth) {
 		Stroke prevStroke = g2D.getStroke();
 		g2D.setStroke(new BasicStroke(strokeWidth));
@@ -233,10 +239,20 @@ public class Graph {
 		g2D.setStroke(prevStroke);
 	}
 	
+	/**
+	 * @deprecated This method will be changed to use width and height (dependant on zoom)
+	 * 	instead of x1 and y1.
+	 */
+	@Deprecated(forRemoval = false)
 	public void drawRect(double x0, double y0, double x1, double y1) {
 		drawRect(x0, y0, x1, y1, Color.BLACK);
 	}
 	
+	/**
+	 * @deprecated This method will be changed to use width and height (dependant on zoom)
+	 * 	instead of x1 and y1.
+	 */
+	@Deprecated(forRemoval = false)
 	public void drawRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		double ax0 = x0;
@@ -254,10 +270,20 @@ public class Graph {
 		g2D.drawRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
 	}
 	
+	/**
+	 * @deprecated This method will be changed to use width and height (dependant on zoom)
+	 * 	instead of x1 and y1.
+	 */
+	@Deprecated(forRemoval = false)
 	public void fillRect(double x0, double y0, double x1, double y1) {
 		fillRect(x0, y0, x1, y1, Color.BLACK);
 	}
 	
+	/**
+	 * @deprecated This method will be changed to use width and height (dependant on zoom)
+	 * 	instead of x1 and y1.
+	 */
+	@Deprecated(forRemoval = false)
 	public void fillRect(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		double ax0 = x0;
