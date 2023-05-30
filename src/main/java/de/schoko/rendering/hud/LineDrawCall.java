@@ -30,7 +30,9 @@ public class LineDrawCall extends DrawCall {
 	@Override
 	public void call(Graphics2D g2D) {
 		g2D.setColor(color);
-		g2D.setStroke(new BasicStroke(width));
+		if (width != -1) {
+			g2D.setStroke(new BasicStroke(width));
+		}
 		g2D.drawLine(x0, y0, x1, y1);
 	}
 
