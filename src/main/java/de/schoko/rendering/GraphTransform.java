@@ -70,6 +70,13 @@ public abstract class GraphTransform {
      */
     public abstract double convSA(double degrees);
     
+    /**
+     * Converts application line width to screen line width
+     * @param lineWidth
+     * @return
+     */
+    public abstract float convSLW(double lineWidth);
+    
     protected void setGTC(GraphTransformContext gtc) {
     	this.gtc = gtc;
     }

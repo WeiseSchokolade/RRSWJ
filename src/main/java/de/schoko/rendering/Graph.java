@@ -194,111 +194,62 @@ public class Graph {
 	
 	/**
 	 * Draws a line between the points (x0, y0) and (x1, y1) with the color Black
-	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 */
-	@Deprecated
 	public void drawLine(double x0, double y0, double x1, double y1) {
 		drawLine(x0, y0, x1, y1, Color.BLACK);
 	}
 	
 	/**
 	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color
-	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 * @param c Color of the line
 	 */
-	@Deprecated
 	public void drawLine(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
 	}
 
 	/**
-	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color and the stroke width in pixels
-	 * @deprecated This method will be changed to make the strokeWidth relative to zoom.
+	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color and the stroke width in application line width.
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 * @param c Color of the line
-	 * @param strokeWidth Width of line in pixels.
+	 * @param strokeWidth Width of line in application line width.
 	 */
-	@Deprecated
-	public void drawLine(double x0, double y0, double x1, double y1, Color c, float strokeWidth) {
+	public void drawLine(double x0, double y0, double x1, double y1, Color c, double strokeWidth) {
 		Stroke prevStroke = g2D.getStroke();
-		g2D.setStroke(new BasicStroke(strokeWidth));
+		g2D.setStroke(new BasicStroke(convSLW(strokeWidth)));
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
 		g2D.setStroke(prevStroke);
 	}
 	
-	/**
-	 * @deprecated This method will be changed to use width and height (dependant on zoom)
-	 * 	instead of x1 and y1.
-	 */
-	@Deprecated
-	public void drawRect(double x0, double y0, double x1, double y1) {
-		drawRect(x0, y0, x1, y1, Color.BLACK);
-	}
 	
-	/**
-	 * @deprecated This method will be changed to use width and height (dependant on zoom)
-	 * 	instead of x1 and y1.
-	 */
-	@Deprecated
-	public void drawRect(double x0, double y0, double x1, double y1, Color c) {
+	public void drawRect(double x, double y, double width, double height) {
+		drawRect(x, y, width, height, Color.BLACK);
+	}
+
+	public void drawRect(double x, double y, double width, double height, Color c) {
 		g2D.setColor(c);
-		double ax0 = x0;
-		double ax1 = x1;
-		double ay0 = y0;
-		double ay1 = y1;
-		if (x0 > x1) {
-			ax0 = x1;
-			ax1 = x0;
-		}
-		if (y0 > y1) {
-			ay0 = y1;
-			ay1 = y0;
-		}
-		g2D.drawRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
+		g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
+	}
+
+	public void fillRect(double x, double y, double width, double height) {
+		fillRect(x, y, width, height, Color.BLACK);
 	}
 	
-	/**
-	 * @deprecated This method will be changed to use width and height (dependant on zoom)
-	 * 	instead of x1 and y1.
-	 */
-	@Deprecated
-	public void fillRect(double x0, double y0, double x1, double y1) {
-		fillRect(x0, y0, x1, y1, Color.BLACK);
-	}
-	
-	/**
-	 * @deprecated This method will be changed to use width and height (dependant on zoom)
-	 * 	instead of x1 and y1.
-	 */
-	@Deprecated
-	public void fillRect(double x0, double y0, double x1, double y1, Color c) {
+	public void fillRect(double x, double y, double width, double height, Color c) {
 		g2D.setColor(c);
-		double ax0 = x0;
-		double ax1 = x1;
-		double ay0 = y0;
-		double ay1 = y1;
-		if (x0 > x1) {
-			ax0 = x1;
-			ax1 = x0;
-		}
-		if (y0 > y1) {
-			ay0 = y1;
-			ay1 = y0;
-		}
-		g2D.fillRect(convSX(ax0), convSY(ay1), convSW(ax1 - ax0), convSH(ay1 - ay0));
+		g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
 	}
 
 	public void drawRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
@@ -425,6 +376,10 @@ public class Graph {
      */
     public double convSA(double degrees) {
     	return Math.toRadians((degrees - 90));
+    }
+    
+    public float convSLW(double lineWidth) {
+    	return transform.convSLW(lineWidth);
     }
     
     public HUDGraph getHUD() {

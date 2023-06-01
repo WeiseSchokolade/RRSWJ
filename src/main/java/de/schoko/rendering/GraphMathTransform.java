@@ -36,13 +36,13 @@ public class GraphMathTransform extends GraphTransform {
     	return gtc.zoom * h;
     }
     
-    /**
-     * Converts degrees to screen radians
-     * @param degrees
-     * @return radians
-     */
     public double convSA(double degrees) {
     	return Math.toRadians((degrees - 90));
     }
+
+	@Override
+	public float convSLW(double lineWidth) {
+		return (float) (lineWidth * gtc.zoom);
+	}
     
 }
