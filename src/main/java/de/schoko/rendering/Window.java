@@ -1,6 +1,7 @@
 package de.schoko.rendering;
 
 import de.schoko.rendering.debugchanger.ChangeApplier;
+import de.schoko.rendering.panels.PanelSystem;
 
 public class Window {
 	private String title;
@@ -30,14 +31,19 @@ public class Window {
 	public void open() {
 		drawBasePanel = new DrawBasePanel(renderer, rendererSettings);
 		
-		// Sets up the context and loads it into the renderer
+		// Sets up the context
 		this.context = new Context(
 				this,
 				this.rendererSettings,
 				this.drawBasePanel.getCamera(),
 				new Keyboard(),
 				new Mouse(drawBasePanel),
-				new ImagePool());
+				new ImagePool(),
+				null);
+		// Adds the panel system afterwards as it requires the context
+		this.context.setPanelSystem(new PanelSystem(context, drawBasePanel));
+		
+		// Loads the context into the renderer
 		this.drawBasePanel.setContext(context);
 		this.renderer.setContext(context);
 		this.renderer.onLoad(context);

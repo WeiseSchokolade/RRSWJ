@@ -10,6 +10,7 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.schoko.rendering.panels.PanelSystem;
 import de.schoko.rendering.shapes.Shape;
 
 public class Graph {
@@ -23,12 +24,19 @@ public class Graph {
 	private HUDGraph hud;
 	private Viewport viewport;
 	private GraphTransform transform;
+	private PanelSystem panelSystem;
 	
-	public Graph(DrawBasePanel drawBasePanel, Graphics gEntered, Camera camera, RendererSettings rendererSettings, GraphTransform transform) {
+	public Graph(DrawBasePanel drawBasePanel,
+				Graphics gEntered,
+				Camera camera,
+				RendererSettings rendererSettings,
+				GraphTransform transform,
+				PanelSystem panelSystem) {
 		this.drawBasePanel = drawBasePanel;
 		this.g2D = (Graphics2D) gEntered;
 		this.viewport = camera.getViewport();
 		this.transform = transform;
+		this.panelSystem = panelSystem;
 		this.transform.setGTC(new GraphTransformContext(
 				viewport.getDrawXOffset(),
 				viewport.getDrawYOffset(),
@@ -85,6 +93,8 @@ public class Graph {
 	}
 	
 	public void finalize() {
+		hud.call();
+		panelSystem.draw(hud);
 		hud.call();
 		
 		// Draw Notifications

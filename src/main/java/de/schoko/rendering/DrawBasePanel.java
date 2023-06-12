@@ -57,7 +57,7 @@ public class DrawBasePanel extends JPanel {
 		});
 		
 		if (renderer != null) {
-			Graph graph = new Graph(this, g, camera, rendererSettings, graphTransform);
+			Graph graph = new Graph(this, g, camera, rendererSettings, graphTransform, context.getPanelSystem());
 			context.setLastGraph(graph);
 			
 			try {
