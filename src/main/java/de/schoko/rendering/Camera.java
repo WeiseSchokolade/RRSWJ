@@ -74,17 +74,17 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	 * @param y Initial y
 	 * @param zoom Initial zoom
 	 * @param viewport Viewport of the camera
-	 * @param panel Panel this camera is added to
+	 * @param drawBasePanel Panel this camera is added to
 	 */
-	public Camera(double x, double y, double zoom, Viewport viewport, Panel panel) {
+	public Camera(double x, double y, double zoom, Viewport viewport, DrawBasePanel drawBasePanel) {
 		this.x = x;
 		this.y = y;
 		this.zoom = zoom;
 		this.viewport = viewport;
-		panel.addMouseListener(this);
-		panel.addMouseMotionListener(this);
-		panel.addMouseWheelListener(this);
-		panel.addKeyListener(this);
+		drawBasePanel.addMouseListener(this);
+		drawBasePanel.addMouseMotionListener(this);
+		drawBasePanel.addMouseWheelListener(this);
+		drawBasePanel.addKeyListener(this);
 		this.movable = true;
 		this.originallyMovable = true;
 	}

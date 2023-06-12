@@ -1,10 +1,10 @@
 package de.schoko.rendering;
 
 public class DefaultViewport implements Viewport {
-	private Panel panel;
+	private DrawBasePanel drawBasePanel;
 	
-	public DefaultViewport(Panel panel) {
-		this.panel = panel;
+	public DefaultViewport(DrawBasePanel drawBasePanel) {
+		this.drawBasePanel = drawBasePanel;
 	}
 
 	@Override
@@ -19,11 +19,11 @@ public class DefaultViewport implements Viewport {
 	
 	@Override
 	public int getWidth() {
-		return panel.getWidth();
+		return drawBasePanel.getWidth();
 	}
 
 	@Override
 	public int getHeight() {
-		return panel.getHeight();
+		return drawBasePanel.getHeight();
 	}
 }

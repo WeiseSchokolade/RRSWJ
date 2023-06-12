@@ -11,11 +11,11 @@ public class SwingWindow extends JFrame {
 	private static final long serialVersionUID = 6777578284226687323L;
 	private EditPanel editPanel;
 	
-	public SwingWindow(String title, Panel panel) {
+	public SwingWindow(String title, DrawBasePanel drawBasePanel) {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		
-		this.add(panel);
+		this.add(drawBasePanel);
 		
 		editPanel = new EditPanel();
 		

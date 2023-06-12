@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-public class Panel extends JPanel {
+public class DrawBasePanel extends JPanel {
 	private static final long serialVersionUID = -2898023849852442454L;
 	private boolean instanciated = false;
     private double lastRun;
@@ -20,7 +20,7 @@ public class Panel extends JPanel {
 	
 	private List<Notification> notifications;
     
-	public Panel(Renderer renderer, RendererSettings rendererSettings) {
+	public DrawBasePanel(Renderer renderer, RendererSettings rendererSettings) {
 		this.setPreferredSize(new Dimension(500, 500));
 		this.setFocusable(true);
 		this.renderer = renderer;

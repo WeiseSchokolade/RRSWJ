@@ -17,15 +17,15 @@ public class Graph {
 	private static final float DEBUG_FONT_SIZE = 14f;
 	private static final float NOTIFICATION_FONT_SIZE = 25f;
 	
-	private Panel panel;
+	private DrawBasePanel drawBasePanel;
 	private Graphics2D g2D;
 	private ArrayList<String> debugStrings;
 	private HUDGraph hud;
 	private Viewport viewport;
 	private GraphTransform transform;
 	
-	public Graph(Panel panel, Graphics gEntered, Camera camera, RendererSettings rendererSettings, GraphTransform transform) {
-		this.panel = panel;
+	public Graph(DrawBasePanel drawBasePanel, Graphics gEntered, Camera camera, RendererSettings rendererSettings, GraphTransform transform) {
+		this.drawBasePanel = drawBasePanel;
 		this.g2D = (Graphics2D) gEntered;
 		this.viewport = camera.getViewport();
 		this.transform = transform;
@@ -37,7 +37,7 @@ public class Graph {
 				viewport.getWidth(),
 				viewport.getHeight(),
 				camera.getZoom()));
-		this.hud = new HUDGraph(g2D, panel.getWidth(), panel.getHeight());
+		this.hud = new HUDGraph(g2D, drawBasePanel.getWidth(), drawBasePanel.getHeight());
 		g2D.setColor(rendererSettings.getBackgroundColor());
 		g2D.fillRect(viewport.getDrawXOffset(), viewport.getDrawYOffset(), viewport.getWidth(), viewport.getHeight());
 		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
@@ -94,7 +94,7 @@ public class Graph {
 		double boxMargin = 4;
 		
 		// The higher the offset the lower the oldest message
-		List<Notification> notifications = panel.getNotifications();
+		List<Notification> notifications = drawBasePanel.getNotifications();
 		double notificationHeight = NOTIFICATION_FONT_SIZE + boxMargin * 2;
 		double offset = notifications.size() * (notificationHeight + boxOffset);
 		for (int i = 0; i < notifications.size(); i++) {
@@ -334,7 +334,7 @@ public class Graph {
 	 * @param time The time the notification is displayed
 	 */
 	public void addNotification(String message, double time) {
-		panel.addNotification(new Notification(message, time));
+		drawBasePanel.addNotification(new Notification(message, time));
 	}
 	
 	public int convSX(double x) {

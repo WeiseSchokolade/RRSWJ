@@ -4,7 +4,7 @@ import de.schoko.rendering.debugchanger.ChangeApplier;
 
 public class Window {
 	private String title;
-	private Panel panel;
+	private DrawBasePanel drawBasePanel;
 	private Renderer renderer;
 	private SwingWindow swingWindow;
 	private RendererSettings rendererSettings;
@@ -28,22 +28,22 @@ public class Window {
 	 * Calls {@link Renderer#onLoad(Context)} and makes the window visible.
 	 */
 	public void open() {
-		panel = new Panel(renderer, rendererSettings);
+		drawBasePanel = new DrawBasePanel(renderer, rendererSettings);
 		
 		// Sets up the context and loads it into the renderer
 		this.context = new Context(
 				this,
 				this.rendererSettings,
-				this.panel.getCamera(),
+				this.drawBasePanel.getCamera(),
 				new Keyboard(),
-				new Mouse(panel),
+				new Mouse(drawBasePanel),
 				new ImagePool());
-		this.panel.setContext(context);
+		this.drawBasePanel.setContext(context);
 		this.renderer.setContext(context);
 		this.renderer.onLoad(context);
 		
 		// Opens the window and starts the rendering process
-		swingWindow = new SwingWindow(title, panel);
+		swingWindow = new SwingWindow(title, drawBasePanel);
 		if (rendererSettings.isMaximizedByDefault()) {
 			swingWindow.setExtendedState(swingWindow.getExtendedState() | SwingWindow.MAXIMIZED_BOTH);
 		}
@@ -66,8 +66,8 @@ public class Window {
 		return rendererSettings;
 	}
 	
-	public Panel getPanel() {
-		return panel;
+	public DrawBasePanel getPanel() {
+		return drawBasePanel;
 	}
 	
 	public SwingWindow getSwingWindow() {
