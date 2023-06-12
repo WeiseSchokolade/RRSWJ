@@ -10,7 +10,7 @@ public class PanelTheme {
 	private Color textColor;
 	private Color checkedColor;
 	private int horMargin, verMargin;
-	private int outlineColor;
+	private int outlineWidth;
 	
 	public PanelTheme(PanelTheme parentTheme) {
 		defaultFont = parentTheme.defaultFont;
@@ -22,7 +22,7 @@ public class PanelTheme {
 		checkedColor = parentTheme.checkedColor;
 		horMargin = parentTheme.horMargin;
 		verMargin = parentTheme.verMargin;
-		outlineColor = parentTheme.outlineColor;
+		outlineWidth = parentTheme.outlineWidth;
 	}
 	
 	public PanelTheme(
@@ -35,7 +35,7 @@ public class PanelTheme {
 			Color checkedColor,
 			int verMagin,
 			int horMargin,
-			int outlineColor) {
+			int outlineWidth) {
 		this.defaultFont = defaultFont;
 		this.unselectedColor = unselectedColor;
 		this.hoveredColor = hoveredColor;
@@ -45,8 +45,7 @@ public class PanelTheme {
 		this.checkedColor = checkedColor;
 		this.horMargin = horMargin;
 		this.verMargin = verMagin;
-		this.outlineColor = outlineColor;
-		
+		this.outlineWidth = outlineWidth;
 	}
 	
 	public Font getDefaultFont() {
@@ -85,8 +84,8 @@ public class PanelTheme {
 		return verMargin;
 	}
 	
-	public int getOutlineColor() {
-		return outlineColor;
+	public int getOutlineWidth() {
+		return outlineWidth;
 	}
 	
 	public void setDefaultFont(Font defaultFont) {
@@ -97,8 +96,8 @@ public class PanelTheme {
 		this.hoveredColor = hoveredColor;
 	}
 	
-	public void setOutlineColor(int outlineColor) {
-		this.outlineColor = outlineColor;
+	public void setOutlineWidth(int outlineColor) {
+		this.outlineWidth = outlineColor;
 	}
 	
 	public void setPanelBackgroundColor(Color panelBackgroundColor) {
