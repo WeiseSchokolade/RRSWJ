@@ -20,7 +20,7 @@ public class PanelSystem {
 				Color.GRAY,
 				Color.LIGHT_GRAY,
 				Color.WHITE,
-				Color.LIGHT_GRAY,
+				Color.GRAY,
 				Color.WHITE,
 				Color.CYAN,
 				5,
@@ -35,10 +35,16 @@ public class PanelSystem {
 		}
 	}
 	
-	public void add(Panel panel) {
+	/**
+	 * Adds the panel to the system, sets its system to this system and calls the load method
+	 * @param panel The panel to add to the PanelSystem.
+	 * @return The parsed panel
+	 */
+	public <T extends Panel> T add(T panel) {
 		panel.setSystem(this);
 		panels.add(panel);
 		panel.load();
+		return panel;
 	}
 	
 	public void remove(Panel panel) {
