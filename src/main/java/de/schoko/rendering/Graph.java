@@ -85,7 +85,7 @@ public class Graph {
 	}
 	
 	public void finalize() {
-		hud.draw();
+		hud.call();
 		
 		// Draw Notifications
 		g2D.setColor(Color.BLACK);
