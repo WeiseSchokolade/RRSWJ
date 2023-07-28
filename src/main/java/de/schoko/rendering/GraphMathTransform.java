@@ -25,7 +25,7 @@ public class GraphMathTransform extends GraphTransform {
     }
     
     public double convBackFromSW(double w) {
-    	return gtc.zoom * w;
+    	return w / gtc.zoom;
     }
     
     public int convSH(double h) {
@@ -33,7 +33,7 @@ public class GraphMathTransform extends GraphTransform {
     }
     
     public double convBackFromSH(double h) {
-    	return gtc.zoom * h;
+    	return h / gtc.zoom;
     }
     
     public double convSA(double degrees) {
