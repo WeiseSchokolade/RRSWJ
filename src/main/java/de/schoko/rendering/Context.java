@@ -1,15 +1,18 @@
 package de.schoko.rendering;
 
+import de.schoko.rendering.panels.PanelSystem;
+
 public class Context {
 	private Camera camera;
 	private Graph lastGraph;
 	private ImagePool imagePool;
 	private Keyboard keyboard;
 	private Mouse mouse;
+	private PanelSystem panelSystem;
 	private RendererSettings settings;
 	private Window window;
 	
-	public Context(Window window, RendererSettings settings, Camera camera, Keyboard keyboard, Mouse mouse, ImagePool imagePool) {
+	public Context(Window window, RendererSettings settings, Camera camera, Keyboard keyboard, Mouse mouse, ImagePool imagePool, PanelSystem panelSystem) {
 		this.window = window;
 		this.settings = settings;
 		this.camera = camera;
@@ -17,6 +20,7 @@ public class Context {
 		this.mouse = mouse;
 		this.imagePool = imagePool;
 		this.mouse.setContext(this);
+		this.panelSystem = panelSystem;
 	}
 	
 	void setCamera(Camera camera) {
@@ -33,6 +37,9 @@ public class Context {
 	}
 	void setMouse(Mouse mouse) {
 		this.mouse = mouse;
+	}
+	void setPanelSystem(PanelSystem panelSystem) {
+		this.panelSystem = panelSystem;
 	}
 	void setSettings(RendererSettings settings) {
 		this.settings = settings;
@@ -54,6 +61,9 @@ public class Context {
 	}
 	public Mouse getMouse() {
 		return mouse;
+	}
+	public PanelSystem getPanelSystem() {
+		return panelSystem;
 	}
 	public RendererSettings getSettings() {
 		return settings;

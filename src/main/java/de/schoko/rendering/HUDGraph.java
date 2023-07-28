@@ -25,13 +25,18 @@ public class HUDGraph {
 		drawCalls = new ArrayList<>();
 	}
 	
-	protected void draw() {
+	/**
+	 * Applies all recent draw calls
+	 */
+	public void call() {
 		for (int i = 0; i < drawCalls.size(); i++) {
 			drawCalls.get(i).call(g2D);
 		}
+		drawCalls.clear();
 	}
 	
-	public void draw(DrawCall... drawCalls) {
+	public void draw(DrawCall drawCall, DrawCall... drawCalls) {
+		this.drawCalls.add(drawCall);
 		for (int i = 0; i < drawCalls.length; i++) {
 			this.drawCalls.add(drawCalls[i]);
 		}

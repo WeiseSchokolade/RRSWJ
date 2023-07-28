@@ -20,10 +20,10 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 	private boolean inPanel = false;
 	private Context context;
 	
-	public Mouse(Panel panel) {
-		panel.addMouseListener(this);
-		panel.addMouseMotionListener(this);
-		panel.addMouseWheelListener(this);
+	public Mouse(DrawBasePanel drawBasePanel) {
+		drawBasePanel.addMouseListener(this);
+		drawBasePanel.addMouseMotionListener(this);
+		drawBasePanel.addMouseWheelListener(this);
 	}
 	
 	/**
