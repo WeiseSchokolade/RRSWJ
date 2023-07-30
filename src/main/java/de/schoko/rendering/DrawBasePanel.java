@@ -28,6 +28,12 @@ public class DrawBasePanel extends JPanel {
 		}
 		this.graphTransform = rendererSettings.getGraphTransform();
 		lastRun = System.currentTimeMillis();
+		
+		if (renderer instanceof SplitRenderer splitRenderer) {
+			tickCaller = new SplitTickCaller(this, splitRenderer);
+		} else {
+			tickCaller = new SimpleTickCaller();
+		}
 	}
 	
 	@Override
