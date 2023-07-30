@@ -19,7 +19,8 @@ public class DrawBasePanel extends JPanel {
 	private GraphTransform graphTransform;
 	
 	private List<Notification> notifications;
-    
+	private TickCaller tickCaller;
+	
 	public DrawBasePanel(Renderer renderer, RendererSettings rendererSettings) {
 		this.setPreferredSize(new Dimension(500, 500));
 		this.setFocusable(true);
@@ -36,6 +37,12 @@ public class DrawBasePanel extends JPanel {
 			notifications.add(new Notification("Started", 5));
 		}
 		lastRun = System.currentTimeMillis();
+		
+		if (renderer instanceof SplitRenderer splitRenderer) {
+			tickCaller = new SplitTickCaller(this, splitRenderer);
+		} else {
+			tickCaller = new SimpleTickCaller();
+		}
 	}
 	
 	@Override
