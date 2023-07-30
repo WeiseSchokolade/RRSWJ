@@ -1,14 +1,15 @@
 package de.schoko.rendering;
 
 public class SplitTickCaller implements TickCaller {
-	private double ups = 60;
+	private double ups;
 	private DrawBasePanel panel;
 	private SplitRenderer splitRenderer;
 	private boolean isRunning;
 	
-	protected SplitTickCaller(DrawBasePanel panel, SplitRenderer splitRenderer) {
+	protected SplitTickCaller(DrawBasePanel panel, SplitRenderer splitRenderer, RendererSettings rendererSettings) {
 		this.panel = panel;
 		this.splitRenderer = splitRenderer;
+		this.ups = rendererSettings.getUPS();
 	}
 	
 	@Override

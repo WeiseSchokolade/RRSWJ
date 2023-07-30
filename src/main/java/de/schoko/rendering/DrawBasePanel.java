@@ -40,7 +40,7 @@ public class DrawBasePanel extends JPanel {
 		lastRun = System.currentTimeMillis();
 		
 		if (renderer instanceof SplitRenderer splitRenderer) {
-			tickCaller = new SplitTickCaller(this, splitRenderer);
+			tickCaller = new SplitTickCaller(this, splitRenderer, rendererSettings);
 		} else {
 			tickCaller = new SimpleTickCaller(this, renderer, rendererSettings);
 		}
