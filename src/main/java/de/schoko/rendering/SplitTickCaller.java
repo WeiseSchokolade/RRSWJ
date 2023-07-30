@@ -1,7 +1,7 @@
 package de.schoko.rendering;
 
 public class SplitTickCaller implements TickCaller {
-	private double fps = 60, ups = 60;
+	private double ups = 60;
 	private DrawBasePanel panel;
 	private SplitRenderer splitRenderer;
 	private boolean isRunning;
@@ -31,5 +31,10 @@ public class SplitTickCaller implements TickCaller {
 			}
 			panel.repaint();
 		}
+	}
+
+	@Override
+	public void renderCall(Graph g, double deltaTimeMS) {
+		splitRenderer.frame(g);
 	}
 }

@@ -20,6 +20,7 @@ public class DrawBasePanel extends JPanel {
 	
 	private List<Notification> notifications;
 	private TickCaller tickCaller;
+	private Thread tickerThread;
 	
 	public DrawBasePanel(Renderer renderer, RendererSettings rendererSettings) {
 		this.setPreferredSize(new Dimension(500, 500));
@@ -41,8 +42,10 @@ public class DrawBasePanel extends JPanel {
 		if (renderer instanceof SplitRenderer splitRenderer) {
 			tickCaller = new SplitTickCaller(this, splitRenderer);
 		} else {
-			tickCaller = new SimpleTickCaller();
+			tickCaller = new SimpleTickCaller(this, renderer, rendererSettings);
 		}
+		tickerThread = new Thread(tickCaller, "Ticker Thread");
+		tickerThread.start();
 	}
 	
 	@Override
@@ -51,17 +54,9 @@ public class DrawBasePanel extends JPanel {
 			this.requestFocusInWindow();
 			instanciated = true;
 		}
-		
+
 		double deltaTime = System.currentTimeMillis() - lastRun;
 		lastRun = System.currentTimeMillis();
-		
-		for (int i = 0; i < notifications.size(); i++) {
-			Notification n = notifications.get(i);
-			n.setTimeLeft(n.getTimeLeft() - deltaTime);
-		}
-		notifications.removeIf((Notification n) -> {
-			return n.getTimeLeft() < 0;
-		});
 		
 		if (renderer != null) {
 			Graph graph = new Graph(this, g, camera, rendererSettings, graphTransform, context.getPanelSystem());
@@ -69,7 +64,7 @@ public class DrawBasePanel extends JPanel {
 			
 			try {
 				camera.update(deltaTime);
-				renderer.render(graph, deltaTime);
+				tickCaller.renderCall(graph, deltaTime);
 			} catch (Exception e) {
 				if (rendererSettings.isCrashingOnException()) {
 					throw e;
@@ -80,15 +75,6 @@ public class DrawBasePanel extends JPanel {
 			context.getMouse().update();
 			context.getKeyboard().update();
 		}
-		if (rendererSettings.getFPSCap() > 0) {
-        	try {
-            	Thread.sleep(rendererSettings.getFPSCap());
-        	} catch (InterruptedException e) {
-        		e.printStackTrace();
-        		assert false : "Couldn't cap FPS";
-        	}
-		}
-        this.repaint();
 	}
 	
 	public void addNotification(Notification n) {
