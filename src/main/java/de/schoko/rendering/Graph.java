@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.ArrayList;
-import java.util.List;
 
 import de.schoko.rendering.panels.PanelSystem;
 import de.schoko.rendering.shapes.Shape;
@@ -16,9 +15,7 @@ import de.schoko.rendering.shapes.Shape;
 public class Graph {
 	private static final int POINT_RADIUS = 2;
 	private static final float DEBUG_FONT_SIZE = 14f;
-	private static final float NOTIFICATION_FONT_SIZE = 25f;
 	
-	private DrawBasePanel drawBasePanel;
 	private Graphics2D g2D;
 	private ArrayList<String> debugStrings;
 	private HUDGraph hud;
@@ -32,7 +29,6 @@ public class Graph {
 				RendererSettings rendererSettings,
 				GraphTransform transform,
 				PanelSystem panelSystem) {
-		this.drawBasePanel = drawBasePanel;
 		this.g2D = (Graphics2D) gEntered;
 		this.viewport = camera.getViewport();
 		this.transform = transform;
@@ -96,26 +92,6 @@ public class Graph {
 		hud.call();
 		panelSystem.draw(hud);
 		hud.call();
-		
-		// Draw Notifications
-		g2D.setColor(Color.BLACK);
-		g2D.setFont(new Font("Segoe UI", Font.PLAIN, (int) NOTIFICATION_FONT_SIZE));
-		double boxOffset = 5;
-		double boxMargin = 4;
-		
-		// The higher the offset the lower the oldest message
-		List<Notification> notifications = drawBasePanel.getNotifications();
-		double notificationHeight = NOTIFICATION_FONT_SIZE + boxMargin * 2;
-		double offset = notifications.size() * (notificationHeight + boxOffset);
-		for (int i = 0; i < notifications.size(); i++) {
-			Notification n = notifications.get(i);
-			int stringWidth = g2D.getFontMetrics().stringWidth(n.getMessage());
-			g2D.setColor(new Color(0.1f, 0.1f, 0.1f, 0.1f));
-			g2D.fillRect((int) (hud.getWidth() / 2 - stringWidth / 2 - boxMargin), (int) (offset - NOTIFICATION_FONT_SIZE - boxMargin), (int) (stringWidth + boxMargin * 2), (int) (notificationHeight + boxMargin));
-			g2D.setColor(Color.BLACK);
-			g2D.drawString(n.getMessage(), (int) (hud.getWidth() / 2 - stringWidth / 2), (int) offset);
-			offset -= notificationHeight + boxOffset;
-		}
 		
 		g2D.setColor(Color.BLUE);
 		g2D.setFont(g2D.getFont().deriveFont(DEBUG_FONT_SIZE));
@@ -336,15 +312,6 @@ public class Graph {
 	 */
 	public void addDebugString(String s) {
 		this.debugStrings.add(s);
-	}
-	
-	/**
-	 * Adds a notification once.
-	 * @param message The message
-	 * @param time The time the notification is displayed
-	 */
-	public void addNotification(String message, double time) {
-		drawBasePanel.addNotification(new Notification(message, time));
 	}
 	
 	public int convSX(double x) {

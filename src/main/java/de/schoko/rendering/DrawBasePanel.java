@@ -2,8 +2,6 @@ package de.schoko.rendering;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -18,8 +16,6 @@ public class DrawBasePanel extends JPanel {
 	private Context context;
 	private GraphTransform graphTransform;
 	
-	private List<Notification> notifications;
-    
 	public DrawBasePanel(Renderer renderer, RendererSettings rendererSettings) {
 		this.setPreferredSize(new Dimension(500, 500));
 		this.setFocusable(true);
@@ -31,10 +27,6 @@ public class DrawBasePanel extends JPanel {
 			camera = new Camera(0, 0, 50, new DefaultViewport(this));
 		}
 		this.graphTransform = rendererSettings.getGraphTransform();
-		this.notifications = new ArrayList<>();
-		if (rendererSettings.isDisplayingStartedNotification()) {
-			notifications.add(new Notification("Started", 5));
-		}
 		lastRun = System.currentTimeMillis();
 	}
 	
@@ -47,14 +39,6 @@ public class DrawBasePanel extends JPanel {
 		
 		double deltaTime = System.currentTimeMillis() - lastRun;
 		lastRun = System.currentTimeMillis();
-		
-		for (int i = 0; i < notifications.size(); i++) {
-			Notification n = notifications.get(i);
-			n.setTimeLeft(n.getTimeLeft() - deltaTime);
-		}
-		notifications.removeIf((Notification n) -> {
-			return n.getTimeLeft() < 0;
-		});
 		
 		if (renderer != null) {
 			Graph graph = new Graph(this, g, camera, rendererSettings, graphTransform, context.getPanelSystem());
@@ -82,14 +66,6 @@ public class DrawBasePanel extends JPanel {
         	}
 		}
         this.repaint();
-	}
-	
-	public void addNotification(Notification n) {
-		this.notifications.add(n);
-	}
-	
-	public List<Notification> getNotifications() {
-		return this.notifications;
 	}
 	
 	public Camera getCamera() {

@@ -7,7 +7,6 @@ public class RendererSettings {
 	private boolean autoCam;
 	private Color backgroundColor;
 	private boolean crashOnException;
-	private boolean displayStartedNotification;
 	private long fpsCap;
 	private GraphTransform graphTransform;
 	private boolean maximizedByDefault;
@@ -21,7 +20,6 @@ public class RendererSettings {
 		autoCam = true;
 		backgroundColor = Color.LIGHT_GRAY;
 		crashOnException = true;
-		displayStartedNotification = true;
 		graphTransform = new GraphMathTransform();
 		fpsCap = 1;
 		renderCoordinateSystem = true;
@@ -96,18 +94,6 @@ public class RendererSettings {
 	 */
 	public void setCrashOnException(boolean crashOnException) {
 		this.crashOnException = crashOnException;
-	}
-	
-	public boolean isDisplayingStartedNotification() {
-		return displayStartedNotification;
-	}
-	
-	/**
-	 * Displays a Notification "Started" after starting when true. Defaults to true.
-	 * @param displayStartedNotification Whether to display the "Started" Notification.
-	 */
-	public void setDisplayStartedNotification(boolean displayStartedNotification) {
-		this.displayStartedNotification = displayStartedNotification;
 	}
 	
 	public GraphTransform getGraphTransform() {
