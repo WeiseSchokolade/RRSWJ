@@ -8,7 +8,7 @@ public class RendererSettings {
 	private Color backgroundColor;
 	private boolean crashOnException;
 	private boolean displayStartedNotification;
-	private long fpsCap = 20;
+	private long fpsCap;
 	private int ups;
 	private GraphTransform graphTransform;
 	private boolean maximizedByDefault;
@@ -25,6 +25,7 @@ public class RendererSettings {
 		displayStartedNotification = true;
 		graphTransform = new GraphMathTransform();
 		fpsCap = 1;
+		ups = 20;
 		renderCoordinateSystem = true;
 		windowResizable = true;
 	}
