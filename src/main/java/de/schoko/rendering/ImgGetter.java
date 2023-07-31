@@ -1,12 +1,12 @@
 package de.schoko.rendering;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 /**
  * @author WeiseSchokolade
@@ -18,10 +18,14 @@ class ImgGetter {
 	 * @param imgPath A resource path where the image is located.
 	 * @return An image loaded from the classpath.
 	 */
-	public static Image getImageFromResources(String imgPath) {
-		ImageIcon imageIcon = new ImageIcon(ImgGetter.class.getClassLoader().getResource(imgPath));
-		Image image = imageIcon.getImage();
-		return image;
+	public static BufferedImage getImageFromResources(String imgPath) {
+		try {
+			return ImageIO.read(ImgGetter.class.getClassLoader().getResourceAsStream(imgPath));
+		} catch (IOException e) {
+			System.out.println("Couldn't read image: " + imgPath);
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -30,12 +34,15 @@ class ImgGetter {
 	 * @param filepath A filepath where the image is located.
 	 * @return An image loaded from the filepath.
 	 */
-	public static Image getImageFromFile(String filepath) {
+	public static BufferedImage getImageFromFile(String filepath) {
 		filepath = filepath.replaceAll("\\\\", "/");
-		
-		ImageIcon imageIcon = new ImageIcon(filepath);
-		Image image = imageIcon.getImage();
-		return image;
+		try {
+			return ImageIO.read(new File(filepath));
+		} catch (IOException e) {
+			System.out.println("Couldn't read image: " + filepath);
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -45,17 +52,18 @@ class ImgGetter {
 	 * @param imgUrl A url where the image is located.
 	 * @return An image loaded from the web
 	 */
-	public static Image getImageFromWeb(String imgUrl) {
-		Image image = null;
+	public static BufferedImage getImageFromWeb(String imgUrl) {
 		URL url;
 		try {
 			url = new URL(imgUrl);
-			image = ImageIO.read(url);
+			return ImageIO.read(url);
 		} catch (MalformedURLException e) {
+			System.out.println("Couldn't read image: " + imgUrl);
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("Couldn't read image: " + imgUrl);
 			e.printStackTrace();
 		}
-		return image;
+		return null;
 	}
 }

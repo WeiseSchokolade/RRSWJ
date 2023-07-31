@@ -1,5 +1,7 @@
 package de.schoko.rendering;
 
+import java.awt.image.BufferedImage;
+
 public enum ImageLocation {
 	JAR((String path) -> {
 		return ImgGetter.getImageFromResources(path);
@@ -17,11 +19,11 @@ public enum ImageLocation {
 		this.imageGetter = imageGetter;
 	}
 	
-	public java.awt.Image getImage(String path) {
+	public BufferedImage getImage(String path) {
 		return imageGetter.getImage(path);
 	}
 	
 	private interface ImageGetter {
-		java.awt.Image getImage(String path);
+		BufferedImage getImage(String path);
 	}
 }

@@ -275,7 +275,7 @@ public class Graph {
 	public void drawImage(Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth() / scale);
 		int imgHeight = (int) convSH(image.getHeight() / scale);
-		g2D.drawImage(image.getAWTImage(), convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
+		g2D.drawImage(image.getBufferedImage(), convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
 	}
 	
 	public void drawImage(java.awt.Image image, double x, double y, double scale) {
@@ -291,7 +291,7 @@ public class Graph {
 		Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) imgWidth, convSY(y) - (int) imgHeight, (int) areaSize, (int) areaSize);
 		double angle = convSA(degrees);
 		area.rotate(angle, imgWidth, imgHeight);
-		area.drawImage(image.getAWTImage(), (int) (imgWidth / 2), (int) (imgHeight / 2), (int) imgWidth, (int) imgHeight, null);
+		area.drawImage(image.getBufferedImage(), (int) (imgWidth / 2), (int) (imgHeight / 2), (int) imgWidth, (int) imgHeight, null);
 		area.dispose();
 	}
 	

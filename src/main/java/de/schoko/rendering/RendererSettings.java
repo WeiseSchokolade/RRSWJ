@@ -32,7 +32,7 @@ public class RendererSettings {
 	 */
 	protected void windowOpened() {
 		if (windowIcon != null) {
-			window.getSwingWindow().setIconImage(windowIcon.getAWTImage());
+			window.getSwingWindow().setIconImage(windowIcon.getBufferedImage());
 		}
 		window.getSwingWindow().setResizable(windowResizable);
 		if (windowWidth != -1) {
@@ -141,7 +141,7 @@ public class RendererSettings {
 	 */
 	public void setWindowIcon(Image image) {
 		if (window.isOpen()) {
-			window.getSwingWindow().setIconImage(image.getAWTImage());
+			window.getSwingWindow().setIconImage(image.getBufferedImage());
 		} else {
 			this.windowIcon = image;
 		}

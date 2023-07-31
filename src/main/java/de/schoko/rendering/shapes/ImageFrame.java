@@ -21,7 +21,7 @@ public class ImageFrame extends Shape {
 	
 	@Override
 	public void render(Graph g) {
-		g.drawImage(image.getAWTImage(), x, y, scale);
+		g.drawImage(image.getBufferedImage(), x, y, scale);
 	}
 
 	public double getX() {

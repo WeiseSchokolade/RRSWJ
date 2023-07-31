@@ -21,7 +21,7 @@ public class ImageDrawCall extends DrawCall {
 	public ImageDrawCall(double x, double y, Image image, double scale) {
 		this.x = x;
 		this.y = y;
-		this.image = image.getAWTImage();
+		this.image = image.getBufferedImage();
 		imageWidth = (int) (image.getWidth() / scale);
 		imageHeight = (int) (image.getHeight() / scale);
 	}
