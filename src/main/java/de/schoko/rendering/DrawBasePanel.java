@@ -45,12 +45,12 @@ public class DrawBasePanel extends JPanel {
 			tickCaller = new SimpleTickCaller(this, renderer, rendererSettings);
 		}
 		tickerThread = new Thread(tickCaller, "Ticker Thread");
-		tickerThread.start();
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		if (!instanciated) {
+			tickerThread.start();
 			this.requestFocusInWindow();
 			instanciated = true;
 		}
