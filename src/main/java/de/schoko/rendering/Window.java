@@ -54,7 +54,7 @@ public class Window {
 			swingWindow.setExtendedState(swingWindow.getExtendedState() | SwingWindow.MAXIMIZED_BOTH);
 		}
 		if (windowIcon != null) {
-			swingWindow.setIconImage(windowIcon.getAWTImage());
+			swingWindow.setIconImage(windowIcon.getBufferedImage());
 		}
 		open = true;
 		rendererSettings.windowOpened();
