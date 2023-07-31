@@ -7,10 +7,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import javax.swing.SwingUtilities;
+
 public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
-	public static final int LEFT_BUTTON = MouseEvent.BUTTON1;
-	public static final int RIGHT_BUTTON = MouseEvent.BUTTON2;
-	public static final int MIDDLE_BUTTON = MouseEvent.BUTTON3;
+	public static final int LEFT_BUTTON = 0;
+	public static final int MIDDLE_BUTTON = 1;
+	public static final int RIGHT_BUTTON = 2;
 	
 	private int x, y;
 	private double mouseWheelClicks;
@@ -104,16 +106,32 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		pressed[e.getButton()] = true;
-		recentlyPressed[e.getButton()] = true;
-		recentlyReleased[e.getButton()] = false;
+		int id = 3;
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			id = 0;
+		} else if (SwingUtilities.isMiddleMouseButton(e)) {
+			id = 1;
+		} else if (SwingUtilities.isRightMouseButton(e)) {
+			id = 2;
+		}
+		pressed[id] = true;
+		recentlyPressed[id] = true;
+		recentlyReleased[id] = false;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		pressed[e.getButton()] = false;
-		recentlyPressed[e.getButton()] = false;
-		recentlyReleased[e.getButton()] = true;
+		int id = 3;
+		if (SwingUtilities.isLeftMouseButton(e)) {
+			id = 0;
+		} else if (SwingUtilities.isMiddleMouseButton(e)) {
+			id = 1;
+		} else if (SwingUtilities.isRightMouseButton(e)) {
+			id = 2;
+		}
+		pressed[id] = false;
+		recentlyPressed[id] = false;
+		recentlyReleased[id] = true;
 	}
 
 	@Override
