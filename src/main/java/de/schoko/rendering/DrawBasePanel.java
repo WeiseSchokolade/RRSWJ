@@ -72,8 +72,6 @@ public class DrawBasePanel extends JPanel {
 				e.printStackTrace();
 			}
 			graph.finalize();
-			context.getMouse().update();
-			context.getKeyboard().update();
 		}
 	}
 	

@@ -28,6 +28,8 @@ public class SplitTickCaller implements TickCaller {
 
 			while (delta >= 1) {
 				splitRenderer.update();
+				splitRenderer.getContext().getMouse().update();
+				splitRenderer.getContext().getKeyboard().update();
 				delta--;
 			}
 			panel.repaint();

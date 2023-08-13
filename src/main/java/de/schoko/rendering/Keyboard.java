@@ -105,7 +105,6 @@ public class Keyboard {
 				recentlyPressedKeys[event.getKeyCode()] = true;
 			} else if (event.getID() == KeyEvent.KEY_RELEASED) {
 				pressedKeys[event.getKeyCode()] = false;
-				recentlyPressedKeys[event.getKeyCode()] = false;
 			}
 			return false;
 		});
