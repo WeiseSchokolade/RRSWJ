@@ -51,9 +51,9 @@ public class CheckButtonPanel extends Panel {
 			setY(y);
 		}
 	}
-	
+
 	@Override
-	public void draw(HUDGraph hud) {
+	public void update() {
 		if (mouse.getScreenX() > x &&
 			mouse.getScreenX() < x + width &&
 			mouse.getScreenY() > y &&
@@ -62,7 +62,10 @@ public class CheckButtonPanel extends Panel {
 				checked = !checked;
 			}
 		}
-		
+	}
+	
+	@Override
+	public void draw(HUDGraph hud) {
 		hud.drawRect(x, y, width, height, backgroundColor);
 		hud.drawRect(x + outlineWidth, y + outlineWidth, width - outlineWidthx2, height - outlineWidthx2, (checked) ? checkedColor : backgroundColor);
 		hud.drawRect(x + outlineWidthx2, y + outlineWidthx2, width - outlineWidthx4, height - outlineWidthx4, backgroundColor);

@@ -17,6 +17,9 @@ public class SimpleTickCaller implements TickCaller {
 		isRunning = true;
 		while (isRunning) {
 			panel.repaint();
+			renderer.getContext().getPanelSystem().update();
+			renderer.getContext().getMouse().update();
+			renderer.getContext().getKeyboard().update();
 			
 			if (rendererSettings.getFPSCap() > 0) {
 	        	try {

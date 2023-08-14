@@ -15,6 +15,8 @@ public abstract class Panel {
 		
 	}
 	public abstract void draw(HUDGraph hud);
+
+	public abstract void update();
 	
 	public PanelSystem getSystem() {
 		return system;
