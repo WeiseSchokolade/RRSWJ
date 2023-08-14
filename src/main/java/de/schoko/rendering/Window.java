@@ -24,11 +24,24 @@ public class Window {
 		this.title = title;
 		this.rendererSettings = new RendererSettings(this);
 	}
-	
+
 	/**
-	 * Calls {@link Renderer#onLoad(Context)} and makes the window visible.
+	 * Sets up internal functionality and makes the window visible.
 	 */
 	public void open() {
+		setup();
+		openWindow();
+	}
+	
+	/**
+	 * Sets up internal functionality.
+	 * 
+	 * @implNote This should only be used if you're using the panel as your own component.
+	 * Usually you should just use {@link Window#open()} which also calls this method.
+	 * If you're using this method by itself instead of {@link Window#open()},
+	 * the window won't open and some settings might not be applied.
+	 */
+	public void setup() {
 		drawBasePanel = new DrawBasePanel(renderer, rendererSettings);
 		
 		// Sets up the context
@@ -47,7 +60,9 @@ public class Window {
 		this.drawBasePanel.setContext(context);
 		this.renderer.setContext(context);
 		this.renderer.onLoad(context);
-		
+	}
+	
+	protected void openWindow() {
 		// Opens the window and starts the rendering process
 		swingWindow = new SwingWindow(title, drawBasePanel);
 		if (rendererSettings.isMaximizedByDefault()) {
