@@ -116,7 +116,6 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 		}
 		pressed[id] = true;
 		recentlyPressed[id] = true;
-		recentlyReleased[id] = false;
 	}
 
 	@Override
@@ -130,7 +129,6 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 			id = 2;
 		}
 		pressed[id] = false;
-		recentlyPressed[id] = false;
 		recentlyReleased[id] = true;
 	}
 
