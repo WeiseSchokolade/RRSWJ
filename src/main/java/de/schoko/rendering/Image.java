@@ -9,6 +9,13 @@ public class Image {
 	private BufferedImage bufferedImage;
 	private int width, height;
 	
+	public Image(String path, ImageLocation location) {
+		this.name = path;
+		this.bufferedImage = location.getImage(path);
+		this.width = bufferedImage.getWidth(null);
+		this.height = bufferedImage.getHeight(null);
+	}
+	
 	public Image(String name, BufferedImage image) {
 		this.name = name;
 		this.bufferedImage = image;
