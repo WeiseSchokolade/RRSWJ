@@ -56,6 +56,9 @@ public class Window {
 		if (windowIcon != null) {
 			swingWindow.setIconImage(windowIcon.getBufferedImage());
 		}
+		if (rendererSettings.getWindowTitle() != null) {
+			swingWindow.setTitle(rendererSettings.getWindowTitle());
+		}
 		open = true;
 		rendererSettings.windowOpened();
 	}

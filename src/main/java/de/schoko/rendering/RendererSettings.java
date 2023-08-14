@@ -13,6 +13,7 @@ public class RendererSettings {
 	private boolean maximizedByDefault;
 	private boolean renderCoordinateSystem;
 	private Image windowIcon;
+	private String windowTitle;
 	private boolean windowResizable;
 	private int windowWidth = -1, windowHeight = -1;
 	
@@ -162,6 +163,22 @@ public class RendererSettings {
 			window.getSwingWindow().setIconImage(image.getBufferedImage());
 		} else {
 			this.windowIcon = image;
+		}
+	}
+	
+	public String getWindowTitle() {
+		return windowTitle;
+	}
+	
+	/**
+	 * Sets the window's title
+	 * @return title The new title
+	 */
+	public void setWindowTitle(String title) {
+		if (window.isOpen()) {
+			window.getSwingWindow().setTitle(title);
+		} else {
+			this.windowTitle = title;
 		}
 	}
 	
