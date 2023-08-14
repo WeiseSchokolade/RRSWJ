@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 public class DrawBasePanel extends JPanel {
 	private static final long serialVersionUID = -2898023849852442454L;
 	private boolean instanciated = false;
-    private double lastRun;
+	private double lastRun;
 
 	private Camera camera;
 	private Renderer renderer;
@@ -28,15 +28,23 @@ public class DrawBasePanel extends JPanel {
 		}
 		this.graphTransform = rendererSettings.getGraphTransform();
 		lastRun = System.currentTimeMillis();
+		
+		if (renderer instanceof SplitRenderer splitRenderer) {
+			tickCaller = new SplitTickCaller(this, splitRenderer, rendererSettings);
+		} else {
+			tickCaller = new SimpleTickCaller(this, renderer, rendererSettings);
+		}
+		tickerThread = new Thread(tickCaller, "Ticker Thread");
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		if (!instanciated) {
+			tickerThread.start();
 			this.requestFocusInWindow();
 			instanciated = true;
 		}
-		
+
 		double deltaTime = System.currentTimeMillis() - lastRun;
 		lastRun = System.currentTimeMillis();
 		
@@ -46,7 +54,7 @@ public class DrawBasePanel extends JPanel {
 			
 			try {
 				camera.update(deltaTime);
-				renderer.render(graph, deltaTime);
+				tickCaller.renderCall(graph, deltaTime);
 			} catch (Exception e) {
 				if (rendererSettings.isCrashingOnException()) {
 					throw e;
@@ -54,18 +62,7 @@ public class DrawBasePanel extends JPanel {
 				e.printStackTrace();
 			}
 			graph.finalize();
-			context.getMouse().update();
-			context.getKeyboard().update();
 		}
-		if (rendererSettings.getFPSCap() > 0) {
-        	try {
-            	Thread.sleep(rendererSettings.getFPSCap());
-        	} catch (InterruptedException e) {
-        		e.printStackTrace();
-        		assert false : "Couldn't cap FPS";
-        	}
-		}
-        this.repaint();
 	}
 	
 	public Camera getCamera() {

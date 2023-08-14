@@ -8,6 +8,7 @@ public class RendererSettings {
 	private Color backgroundColor;
 	private boolean crashOnException;
 	private long fpsCap;
+	private int ups;
 	private GraphTransform graphTransform;
 	private boolean maximizedByDefault;
 	private boolean renderCoordinateSystem;
@@ -22,6 +23,7 @@ public class RendererSettings {
 		crashOnException = true;
 		graphTransform = new GraphMathTransform();
 		fpsCap = 1;
+		ups = 20;
 		renderCoordinateSystem = true;
 		windowResizable = true;
 	}
@@ -116,11 +118,27 @@ public class RendererSettings {
 	}
 	
 	/**
-	 * Sets how long RRSWJ should wait before drawing the next frame in milliseconds. Defaults to 1 millisecond.
+	 * Sets how long RRSWJ should wait before drawing the next frame in milliseconds.
+	 * Only applies to simple renderers.
+	 * Defaults to 1 millisecond.
 	 * @param fpsCap
 	 */
 	public void setFPSCap(long fpsCap) {
 		this.fpsCap = fpsCap;
+	}
+
+	public int getUPS() {
+		return ups;
+	}
+	/**
+	 * Sets how many updates there should be in a second.
+	 * Only applies to split renderers
+	 * Defaults to 20 (= 50 milliseconds per update).
+	 * Can only be used before Window is opened.
+	 * @return
+	 */
+	public void setUPS(int ups) {
+		this.ups = ups;
 	}
 	
 	public boolean isMaximizedByDefault() {

@@ -51,7 +51,7 @@ public class ButtonPanel extends Panel {
 	}
 	
 	@Override
-	public void draw(HUDGraph hud) {
+	public void update() {
 		hovered = (mouse.getScreenX() > x &&
 				mouse.getScreenX() < x + width &&
 				mouse.getScreenY() > y &&
@@ -67,7 +67,10 @@ public class ButtonPanel extends Panel {
 				pressed = true;
 			}
 		}
-		
+	}
+	
+	@Override
+	public void draw(HUDGraph hud) {
 		if (pressed) {
 			hud.drawRect(x, y, width, height, pressedColor);
 		} else {

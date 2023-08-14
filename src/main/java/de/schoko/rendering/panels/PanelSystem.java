@@ -30,8 +30,13 @@ public class PanelSystem {
 	
 	public void draw(HUDGraph hud) {
 		for (int i = 0; i < panels.size(); i++) {
-			Panel panel = panels.get(i);
-			panel.draw(hud);
+			panels.get(i).draw(hud);
+		}
+	}
+	
+	public void update() {
+		for (int i = 0; i < panels.size(); i++) {
+			panels.get(i).update();
 		}
 	}
 	

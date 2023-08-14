@@ -29,6 +29,11 @@ public class SimpleTextPanel extends Panel {
 	}
 	
 	@Override
+	public void update() {
+		
+	}
+	
+	@Override
 	public void draw(HUDGraph hud) {
 		hud.drawText(text, x, y, textColor, font, TextAlignment.LEFT);
 	}

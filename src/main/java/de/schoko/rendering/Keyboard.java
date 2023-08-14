@@ -4,12 +4,14 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
 public class Keyboard {
-	private boolean pressedKeys[] = new boolean[550];
+	private static int MAX_SUPPORTED_KEYS = 65536;
+	
+	private boolean pressedKeys[] = new boolean[MAX_SUPPORTED_KEYS];
 	/**
 	 * A key gets set to true when it is pressed.
-	 * Every time {@link Keyboard#update()} get's called every value is set to false
+	 * Every time {@link Keyboard#update()} get's called every value is set to false.
 	 */
-	private boolean recentlyPressedKeys[] = new boolean[550];
+	private boolean recentlyPressedKeys[] = new boolean[MAX_SUPPORTED_KEYS];
 
 	public static final int ZERO = KeyEvent.VK_0,
 			ONE = KeyEvent.VK_1,
@@ -105,7 +107,6 @@ public class Keyboard {
 				recentlyPressedKeys[event.getKeyCode()] = true;
 			} else if (event.getID() == KeyEvent.KEY_RELEASED) {
 				pressedKeys[event.getKeyCode()] = false;
-				recentlyPressedKeys[event.getKeyCode()] = false;
 			}
 			return false;
 		});
