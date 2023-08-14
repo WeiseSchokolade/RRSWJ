@@ -15,6 +15,8 @@ public class DrawBasePanel extends JPanel {
 	private RendererSettings rendererSettings;
 	private Context context;
 	private GraphTransform graphTransform;
+	private TickCaller tickCaller;
+	private Thread tickerThread;
 	
 	public DrawBasePanel(Renderer renderer, RendererSettings rendererSettings) {
 		this.setPreferredSize(new Dimension(500, 500));
