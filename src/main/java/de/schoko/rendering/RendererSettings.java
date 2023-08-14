@@ -155,7 +155,8 @@ public class RendererSettings {
 	}
 	
 	/**
-	 * Sets the window's icon
+	 * Sets the window's icon. If you want to use this before {@link Window#open()} is used,
+	 * you can use the {@link Image#Image(String, ImageLocation)} constructor.
 	 * @param image The new icon
 	 */
 	public void setWindowIcon(Image image) {
