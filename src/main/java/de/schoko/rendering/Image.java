@@ -48,7 +48,7 @@ public class Image {
 	}
 	
 	/**
-	 * Flips the current image horizontally.
+	 * @return A copy of the image flipped horizontally.
 	 * @return The flipped image
 	 */
 	public Image flipHorizontally() {
@@ -61,8 +61,7 @@ public class Image {
 	}
 
 	/**
-	 * Flips the current image vertically.
-	 * @return The flipped image
+	 * @return A copy of the image flipped vertically.
 	 */
 	public Image flipVertically() {
 		Image copy = copy(true);
@@ -74,7 +73,7 @@ public class Image {
 	}
 	
 	/**
-	 * @return A copy of the image rotated clockwise
+	 * @return A copy of the image rotated clockwise.
 	 */
 	public Image turnClockwise() {
 		Image copy = copy(true);
@@ -86,7 +85,7 @@ public class Image {
 	}
 
 	/**
-	 * @return A copy of the image rotated counter clockwise
+	 * @return A copy of the image rotated counter clockwise.
 	 */
 	public Image turnCounterClockwise() {
 		Image copy = copy(true);
