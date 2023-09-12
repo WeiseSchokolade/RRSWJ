@@ -96,15 +96,6 @@ public class Image {
 		return copy;
 	}
 	
-	/**
-	 * @deprecated This name is a little misleading
-	 * @return The generated image
-	 */
-	@Deprecated
-	public BufferedImage getAWTImage() {
-		return bufferedImage;
-	}
-	
 	public BufferedImage getBufferedImage() {
 		return bufferedImage;
 	}
