@@ -101,18 +101,4 @@ public class Window {
 	public boolean isOpen() {
 		return open;
 	}
-	
-	/**
-	 * @deprecated
-	 * This method is deprecated in favor of {@link RendererSettings#setWindowIcon(Image)}
-	 * @param image
-	 */
-	@Deprecated
-	public void setWindowIcon(Image image) {
-		if (swingWindow != null) {
-			swingWindow.setIconImage(image.getAWTImage());
-		} else {
-			windowIcon = image;
-		}
-	}
 }
