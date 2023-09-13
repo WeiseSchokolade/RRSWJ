@@ -23,6 +23,14 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	 */
 	private boolean originallyMovable;
 	/*
+	 * Whether the camera can be zoomed
+	 */
+	private boolean zoomable;
+	/*
+	 * Whether the camera should be zoomable after the camera path was stopped
+	 */
+	private boolean originallyZoomable;
+	/*
 	 * Whether the camera is currently being moved
 	 */
 	private boolean movingCam;
@@ -39,6 +47,8 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		this.y = y;
 		this.movable = false;
 		this.originallyMovable = false;
+		this.zoomable = false;
+		this.originallyZoomable = false;
 	}
 	
 	/**
@@ -51,6 +61,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		this.y = y;
 		this.zoom = zoom;
 		this.movable = false;
+		this.zoomable = false;
 		this.originallyMovable = false;
 	}
 
@@ -67,6 +78,8 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		this.viewport = viewport;
 		this.movable = false;
 		this.originallyMovable = false;
+		this.zoomable = false;
+		this.originallyZoomable = false;
 	}
 	/**
 	 * Adds movement functionality to camera using the panel
@@ -87,6 +100,8 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		drawBasePanel.addKeyListener(this);
 		this.movable = true;
 		this.originallyMovable = true;
+		this.zoomable = true;
+		this.originallyZoomable = true;
 	}
 	
 	public void update(double deltaTimeMS) {
@@ -103,9 +118,11 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	public void setCameraPath(CameraPath cameraPath) {
 		if (cameraPath == null) {
 			this.movable = originallyMovable;
+			this.zoomable = originallyZoomable;
 			this.cameraPath = null;
 		} else {
 			this.movable = false;
+			this.zoomable = false;
 			this.cameraPath = cameraPath;
 		}
 	}
@@ -188,7 +205,7 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 	
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if (!movable) return;
+		if (!zoomable) return;
 		if (e.getWheelRotation() > 0) {
             zoom *= 0.95;
         } else {
@@ -213,5 +230,13 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+	
+	public void setMovable(boolean movable) {
+		this.movable = movable;
+	}
+	
+	public void setZoomable(boolean zoomable) {
+		this.zoomable = zoomable;
 	}
 }
