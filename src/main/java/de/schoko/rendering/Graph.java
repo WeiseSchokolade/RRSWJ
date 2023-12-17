@@ -295,20 +295,19 @@ public class Graph {
 	public void fillRect(CoordProvider coord, double width, double height, Color c) {
 		fillRect(coord.getX(), coord.getY(), width, height, c);
 	}
-	
+
 	public void drawRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
 		if (degrees == 0) {
 			g2D.setColor(c);
-			g2D.drawRect(convSX(x), convSY(y), convSW(width), convSH(height));
+			g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
 		} else {
 			double drawnWidth = convSW(width);
 			double drawnHeight = convSH(height);
-			int areaSize = (int) (drawnWidth > drawnHeight ? drawnWidth * 2 : drawnHeight * 2);
-			Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) drawnWidth, convSY(y) - (int) drawnHeight, (int) areaSize, (int) areaSize);
-			double angle = convSA(-degrees);
-			area.rotate(angle, areaSize / 2, areaSize / 2);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.translate(0, -drawnHeight);
+			area.rotate(Math.toRadians(degrees), convSX(x) + drawnWidth * 0.5, convSY(y) + drawnHeight * 0.5);
 			area.setColor(c);
-			area.drawRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
+			area.drawRect(convSX(x), convSY(y), (int) drawnWidth, (int) drawnHeight);
 			area.dispose();
 		}
 	}
@@ -320,16 +319,15 @@ public class Graph {
 	public void fillRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
 		if (degrees == 0) {
 			g2D.setColor(c);
-			g2D.fillRect(convSX(x), convSY(y), convSW(width), convSH(height));
+			g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
 		} else {
 			double drawnWidth = convSW(width);
 			double drawnHeight = convSH(height);
-			int areaSize = (int) (drawnWidth > drawnHeight ? drawnWidth * 2 : drawnHeight * 2);
-			Graphics2D area = (Graphics2D) g2D.create(convSX(x) - (int) drawnWidth, convSY(y) - (int) drawnHeight, (int) areaSize, (int) areaSize);
-			double angle = convSA(-degrees);
-			area.rotate(angle, areaSize / 2, areaSize / 2);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.translate(0, -drawnHeight);
+			area.rotate(Math.toRadians(degrees), convSX(x) + drawnWidth * 0.5, convSY(y) + drawnHeight * 0.5);
 			area.setColor(c);
-			area.fillRect((int) (drawnWidth / 2), (int) (drawnHeight / 2), (int) drawnWidth, (int) drawnHeight);
+			area.fillRect(convSX(x), convSY(y), (int) drawnWidth, (int) drawnHeight);
 			area.dispose();
 		}
 	}
