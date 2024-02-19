@@ -4,6 +4,7 @@ import de.schoko.rendering.HUDGraph;
 
 public abstract class Panel {
 	private PanelSystem system;
+	private boolean removed;
 	
 	/**
 	 * Optionally overriden method for loading. When 
@@ -18,11 +19,19 @@ public abstract class Panel {
 
 	public abstract void update();
 	
+	public void remove() {
+		this.removed = true;
+	}
+	
 	public PanelSystem getSystem() {
 		return system;
 	}
 	
 	protected final void setSystem(PanelSystem system) {
 		this.system = system;
+	}
+	
+	public boolean isRemoved() {
+		return removed;
 	}
 }

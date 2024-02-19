@@ -36,7 +36,12 @@ public class PanelSystem {
 	
 	public void update() {
 		for (int i = 0; i < panels.size(); i++) {
-			panels.get(i).update();
+			Panel panel = panels.get(i);
+			panel.update();
+			if (panel.isRemoved()) {
+				panels.remove(i);
+				i--;
+			}
 		}
 	}
 	
