@@ -11,6 +11,7 @@ public class PanelSystem {
 	private ArrayList<Panel> panels;
 	private Context context;
 	private PanelTheme theme;
+	private boolean hidden;
 	
 	public PanelSystem(Context context, DrawBasePanel drawBasePanel) {
 		panels = new ArrayList<>();
@@ -29,12 +30,14 @@ public class PanelSystem {
 	}
 	
 	public void draw(HUDGraph hud) {
+		if (hidden) return;
 		for (int i = 0; i < panels.size(); i++) {
 			panels.get(i).draw(hud);
 		}
 	}
 	
 	public void update() {
+		if (hidden) return;
 		for (int i = 0; i < panels.size(); i++) {
 			Panel panel = panels.get(i);
 			panel.update();
@@ -71,5 +74,13 @@ public class PanelSystem {
 	
 	public PanelTheme getTheme() {
 		return theme;
+	}
+	
+	public boolean isHidden() {
+		return hidden;
+	}
+	
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 }
