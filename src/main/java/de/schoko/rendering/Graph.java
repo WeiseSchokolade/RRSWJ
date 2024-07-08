@@ -22,6 +22,30 @@ public class Graph {
 	private Viewport viewport;
 	private GraphTransform transform;
 	private PanelSystem panelSystem;
+	private Camera camera;
+	private RendererSettings rendererSettings;
+	
+	public Graph(Graphics gEntered,
+			Camera camera,
+			RendererSettings rendererSettings) {
+		this.g2D = (Graphics2D) gEntered;
+		this.viewport = camera.getViewport();
+		this.transform = rendererSettings.getGraphTransform();
+		this.camera = camera;
+		this.rendererSettings = rendererSettings;
+		this.transform.setGTC(new GraphTransformContext(
+				viewport.getDrawXOffset(),
+				viewport.getDrawYOffset(),
+				(int) (camera.getX() * camera.getZoom()),
+				(int) -(camera.getY() * camera.getZoom()),
+				viewport.getWidth(),
+				viewport.getHeight(),
+				camera.getZoom()));
+		debugStrings = new ArrayList<>();
+		
+		g2D.setColor(rendererSettings.getBackgroundColor());
+		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
+	}
 	
 	public Graph(DrawBasePanel drawBasePanel,
 				Graphics gEntered,
@@ -32,6 +56,8 @@ public class Graph {
 		this.g2D = (Graphics2D) gEntered;
 		this.viewport = camera.getViewport();
 		this.transform = transform;
+		this.camera = camera;
+		this.rendererSettings = rendererSettings;
 		this.panelSystem = panelSystem;
 		this.transform.setGTC(new GraphTransformContext(
 				viewport.getDrawXOffset(),
@@ -47,16 +73,7 @@ public class Graph {
 		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
 		
 		if (rendererSettings.isRenderingCoordinateSystem()) {
-			drawLine(0, 10, 0, -10, Color.BLUE);
-			drawLine(-10, 0, 10, 0, Color.RED);
-			for (int i = -10; i <= 10; i++) {
-				if (i == 0) continue;
-				drawLine(i, 0.1, i, -0.1, Color.RED);
-			}
-			for (int i = -10; i <= 10; i++) {
-				if (i == 0) continue;
-				drawLine(-0.1, i, 0.1, i, Color.BLUE);
-			}
+			drawCoordinateSystem();
 		}
 		debugStrings = new ArrayList<>();
 	}
@@ -97,6 +114,19 @@ public class Graph {
 		g2D.setFont(g2D.getFont().deriveFont(DEBUG_FONT_SIZE));
 		for (int i = 0; i < debugStrings.size(); i++) {
 			g2D.drawString(debugStrings.get(i), 1, i * (DEBUG_FONT_SIZE + 2) + DEBUG_FONT_SIZE);
+		}
+	}
+	
+	public void drawCoordinateSystem() {
+		drawLine(0, 10, 0, -10, Color.BLUE);
+		drawLine(-10, 0, 10, 0, Color.RED);
+		for (int i = -10; i <= 10; i++) {
+			if (i == 0) continue;
+			drawLine(i, 0.1, i, -0.1, Color.RED);
+		}
+		for (int i = -10; i <= 10; i++) {
+			if (i == 0) continue;
+			drawLine(-0.1, i, 0.1, i, Color.BLUE);
 		}
 	}
 	
@@ -442,6 +472,14 @@ public class Graph {
     public HUDGraph getHUD() {
     	return hud;
     }
+    
+    public Camera getCamera() {
+		return camera;
+	}
+    
+    public RendererSettings getRendererSettings() {
+		return rendererSettings;
+	}
     
     public Viewport getViewport() {
     	return viewport;
