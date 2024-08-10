@@ -9,7 +9,7 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.SwingUtilities;
 
-public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
+public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener, CoordProvider {
 	public static final int LEFT_BUTTON = 0;
 	public static final int MIDDLE_BUTTON = 1;
 	public static final int RIGHT_BUTTON = 2;
