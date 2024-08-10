@@ -1,22 +1,22 @@
 package de.schoko.rendering;
 
 public class SplitTickCaller implements TickCaller {
-	private double ups;
 	private DrawBasePanel panel;
 	private SplitRenderer splitRenderer;
 	private boolean isRunning;
+	private RendererSettings rendererSettings;
 
 	protected SplitTickCaller(DrawBasePanel panel, SplitRenderer splitRenderer, RendererSettings rendererSettings) {
 		this.panel = panel;
 		this.splitRenderer = splitRenderer;
-		this.ups = rendererSettings.getUPS();
+		this.rendererSettings = rendererSettings;
 	}
 
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
 		// in nano seconds
-		double timePerUpdate = 1_000_000_000 / ups;
+		double timePerUpdate = 1_000_000_000 / (double) rendererSettings.getUPS();
 		// how many times it needs to update
 		double delta = 0;
 
@@ -34,6 +34,15 @@ public class SplitTickCaller implements TickCaller {
 				delta--;
 			}
 			panel.repaint();
+
+			if (rendererSettings.getFPSCap() > 0) {
+	        	try {
+	            	Thread.sleep(rendererSettings.getFPSCap());
+	        	} catch (InterruptedException e) {
+	        		e.printStackTrace();
+	        		assert false : "Couldn't cap FPS";
+	        	}
+			}
 		}
 	}
 
