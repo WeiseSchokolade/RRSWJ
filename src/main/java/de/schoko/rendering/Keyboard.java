@@ -2,6 +2,8 @@ package de.schoko.rendering;
 
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Keyboard {
 	private static int MAX_SUPPORTED_KEYS = 65536;
@@ -12,6 +14,8 @@ public class Keyboard {
 	 * Every time {@link Keyboard#update()} get's called every value is set to false.
 	 */
 	private boolean recentlyPressedKeys[] = new boolean[MAX_SUPPORTED_KEYS];
+	
+	private List<Character> recentlyTypedCharacters;
 
 	public static final int ZERO = KeyEvent.VK_0,
 			ONE = KeyEvent.VK_1,
@@ -101,12 +105,17 @@ public class Keyboard {
 			F24 = KeyEvent.VK_F24;
 
 	public Keyboard() {
+		recentlyTypedCharacters = new ArrayList<>();
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(event -> {
 			if (event.getID() == KeyEvent.KEY_PRESSED) {
 				pressedKeys[event.getKeyCode()] = true;
 				recentlyPressedKeys[event.getKeyCode()] = true;
 			} else if (event.getID() == KeyEvent.KEY_RELEASED) {
 				pressedKeys[event.getKeyCode()] = false;
+			} else if (event.getID() == KeyEvent.KEY_TYPED) {
+				if (event.getKeyChar() != BACK_SPACE && event.getKeyChar() != ESCAPE && !event.isActionKey()) {
+					recentlyTypedCharacters.add(event.getKeyChar());
+				}
 			}
 			return false;
 		});
@@ -151,5 +160,13 @@ public class Keyboard {
 	 */
 	public boolean wasRecentlyPressed(int keyCode) {
 		return recentlyPressedKeys[keyCode];
+	}
+	
+	/**
+	 * Returns a list of recently typed characters; used for text input. Remember to clear the list when the input element loses focus.
+	 * @return List<Character>
+	 */
+	public List<Character> getRecentlyTypedCharacters() {
+		return recentlyTypedCharacters;
 	}
 }
