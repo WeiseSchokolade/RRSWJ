@@ -313,6 +313,14 @@ public class Graph {
 		fillRect(x, y, width, height, Color.BLACK);
 	}
 
+	public void fillRect(CoordProvider coord, double width, double height) {
+		fillRect(coord.getX(), coord.getY(), width, height);
+	}
+	
+	/**
+	 * @deprecated Depracted because spelling mistake; Use {@link Graph#fillRect(CoordProvider, double, double)} instead
+	 */
+	@Deprecated
 	public void filllRect(CoordProvider coord, double width, double height) {
 		drawRect(coord.getX(), coord.getY(), width, height);
 	}
