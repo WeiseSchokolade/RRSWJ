@@ -373,6 +373,50 @@ public class Graph {
 	public void fillRotatedRect(CoordProvider coord, double width, double height, double degrees, Color c) {
 		fillRotatedRect(coord.getX(), coord.getY(), width, height, degrees, c);
 	}
+
+	public void drawRotatedCenteredRect(double x, double y, double width, double height, double degrees, Color c) {
+		double halfWidth = width * 0.5;
+		double halfHeight = height * 0.5;
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.drawRect(convSX(x - halfWidth), convSY(y + halfHeight), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.translate(0, -drawnHeight);
+			area.rotate(Math.toRadians(degrees), convSX(x - halfWidth) + drawnWidth * 0.5, convSY(y - halfHeight) + drawnHeight * 0.5);
+			area.setColor(c);
+			area.drawRect(convSX(x - halfWidth), convSY(y - halfHeight), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
+	}
+	
+	public void drawRotatedCenteredRect(CoordProvider coord, double width, double height, double degrees, Color c) {
+		drawRotatedCenteredRect(coord.getX(), coord.getY(), width, height, degrees, c);
+	}
+	
+	public void fillRotatedCenteredRect(double x, double y, double width, double height, double degrees, Color c) {
+		double halfWidth = width * 0.5;
+		double halfHeight = height * 0.5;
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.fillRect(convSX(x - halfWidth), convSY(y + halfHeight), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.translate(0, -drawnHeight);
+			area.rotate(Math.toRadians(degrees), convSX(x - halfWidth) + drawnWidth * 0.5, convSY(y - halfHeight) + drawnHeight * 0.5);
+			area.setColor(c);
+			area.fillRect(convSX(x - halfWidth), convSY(y - halfHeight), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
+	}
+	
+	public void fillRotatedCenteredRect(CoordProvider coord, double width, double height, double degrees, Color c) {
+		fillRotatedCenteredRect(coord.getX(), coord.getY(), width, height, degrees, c);
+	}
 	
 	public void drawImage(Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth() / scale);
