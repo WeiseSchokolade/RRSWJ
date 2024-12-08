@@ -1,5 +1,7 @@
 package de.schoko.rendering;
 
+import javax.swing.JFrame;
+
 import de.schoko.rendering.debugchanger.ChangeApplier;
 import de.schoko.rendering.panels.PanelSystem;
 
@@ -73,6 +75,9 @@ public class Window {
 		}
 		if (rendererSettings.getWindowTitle() != null) {
 			swingWindow.setTitle(rendererSettings.getWindowTitle());
+		}
+		if (!rendererSettings.isExitingOnClose()) {
+			swingWindow.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		}
 		open = true;
 		rendererSettings.windowOpened();

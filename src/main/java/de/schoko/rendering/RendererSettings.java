@@ -2,11 +2,14 @@ package de.schoko.rendering;
 
 import java.awt.Color;
 
+import javax.swing.JFrame;
+
 public class RendererSettings {
 	private Window window;
 	private boolean autoCam;
 	private Color backgroundColor;
 	private boolean crashOnException;
+	private boolean exitOnClose;
 	private long fpsCap;
 	private int ups;
 	private GraphTransform graphTransform;
@@ -22,6 +25,7 @@ public class RendererSettings {
 		autoCam = true;
 		backgroundColor = Color.LIGHT_GRAY;
 		crashOnException = true;
+		exitOnClose = true;
 		graphTransform = new GraphMathTransform();
 		fpsCap = 1;
 		ups = 20;
@@ -97,6 +101,25 @@ public class RendererSettings {
 	 */
 	public void setCrashOnException(boolean crashOnException) {
 		this.crashOnException = crashOnException;
+	}
+	
+	public boolean isExitingOnClose() {
+		return exitOnClose;
+	}
+	
+	/**
+	 * Sets whether the program should exit when the window is closed
+	 * @param exitOnClose
+	 */
+	public void setExitOnClose(boolean exitOnClose) {
+		this.exitOnClose = exitOnClose;
+		if (window != null) {
+			if (exitOnClose) {
+				window.getSwingWindow().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			} else {
+				window.getSwingWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			}
+		}
 	}
 	
 	public GraphTransform getGraphTransform() {
