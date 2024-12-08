@@ -240,6 +240,10 @@ public class Camera implements MouseListener, MouseMotionListener, MouseWheelLis
 		this.zoomable = zoomable;
 	}
 	
+	public boolean isMovable() {
+		return movable;
+	}
+	
 	public boolean isZoomable() {
 		return zoomable;
 	}
