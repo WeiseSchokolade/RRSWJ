@@ -113,7 +113,7 @@ public class RendererSettings {
 	 */
 	public void setExitOnClose(boolean exitOnClose) {
 		this.exitOnClose = exitOnClose;
-		if (window != null) {
+		if (window.getSwingWindow() != null) {
 			if (exitOnClose) {
 				window.getSwingWindow().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			} else {
