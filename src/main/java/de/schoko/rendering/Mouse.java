@@ -15,7 +15,7 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 	public static final int RIGHT_BUTTON = 2;
 	
 	private int x, y;
-	private double mouseWheelClicks;
+	private double mouseWheelClicks, recentMouseWheelClicks;
 	private boolean[] pressed = new boolean[MouseInfo.getNumberOfButtons() + 1];
 	private boolean[] recentlyPressed = new boolean[pressed.length];
 	private boolean[] recentlyReleased = new boolean[pressed.length];
@@ -36,6 +36,7 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 			recentlyPressed[i] = false;
 			recentlyReleased[i] = false;
 		}
+		recentMouseWheelClicks = mouseWheelClicks;
 	}
 	
 	/**
@@ -72,6 +73,14 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 	 */
 	public double getMouseWheelClicks() {
 		return mouseWheelClicks;
+	}
+	
+	/**
+	 * @return The change of rotation of the mouse wheel since the last frame
+	 * @see Mouse#getMouseWheelClicks()
+	 */
+	public double getDeltaMouseWheelClicks() {
+		return mouseWheelClicks - recentMouseWheelClicks;
 	}
 	
 	public boolean isPressed(int buttonNumber) {
