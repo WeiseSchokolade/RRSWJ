@@ -118,15 +118,19 @@ public class Graph {
 	}
 	
 	public void drawCoordinateSystem() {
-		drawLine(0, 10, 0, -10, Color.BLUE);
-		drawLine(-10, 0, 10, 0, Color.RED);
+		drawCoordinateSystem(0, 0);
+	}
+
+	public void drawCoordinateSystem(double x, double y) {
+		drawLine(x, x + 10, y, y - 10, Color.BLUE);
+		drawLine(x - 10, x, y + 10, y, Color.RED);
 		for (int i = -10; i <= 10; i++) {
 			if (i == 0) continue;
-			drawLine(i, 0.1, i, -0.1, Color.RED);
+			drawLine(x + i, y + 0.1, x + i, y - 0.1, Color.RED);
 		}
 		for (int i = -10; i <= 10; i++) {
 			if (i == 0) continue;
-			drawLine(-0.1, i, 0.1, i, Color.BLUE);
+			drawLine(x - 0.1, y + i, x + 0.1, y + i, Color.BLUE);
 		}
 	}
 	
