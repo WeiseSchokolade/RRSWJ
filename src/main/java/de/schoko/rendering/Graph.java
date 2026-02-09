@@ -421,7 +421,48 @@ public class Graph {
 	public void fillRotatedCenteredRect(CoordProvider coord, double width, double height, double degrees, Color c) {
 		fillRotatedCenteredRect(coord.getX(), coord.getY(), width, height, degrees, c);
 	}
+
+	public void drawPivottedRotatedCenteredRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.rotate(Math.toRadians(degrees), convSX(x + pivotX), convSY(y + pivotY));
+			//area.translate(0, -drawnHeight);
+			area.setColor(c);
+			area.drawRect(convSX(x), convSY(y + height), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
+	}
 	
+	public void drawPivottedRotatedCenteredRect(CoordProvider coord, CoordProvider localPivot, double width, double height, double degrees, Color c) {
+		drawPivottedRotatedCenteredRect(coord.getX(), coord.getY(), localPivot.getX(), localPivot.getY(), width, height, degrees, c);
+	}
+
+	public void fillPivottedRotatedCenteredRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
+		if (degrees == 0) {
+			g2D.setColor(c);
+			g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
+		} else {
+			double drawnWidth = convSW(width);
+			double drawnHeight = convSH(height);
+			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
+			area.rotate(Math.toRadians(degrees), convSX(x + pivotX), convSY(y + pivotY));
+			//area.translate(0, -drawnHeight);
+			area.setColor(c);
+			area.fillRect(convSX(x), convSY(y + height), (int) drawnWidth, (int) drawnHeight);
+			area.dispose();
+		}
+	}
+
+	
+	public void fillPivottedRotatedCenteredRect(CoordProvider coord, CoordProvider localPivot, double width, double height, double degrees, Color c) {
+		fillPivottedRotatedCenteredRect(coord.getX(), coord.getY(), localPivot.getX(), localPivot.getY(), width, height, degrees, c);
+	}
+
 	public void drawImage(Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth() / scale);
 		int imgHeight = (int) convSH(image.getHeight() / scale);
