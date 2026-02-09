@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import de.schoko.rendering.panels.PanelSystem;
 import de.schoko.rendering.shapes.Shape;
 
-public class Graph {
+public class Graph implements OverloadedGraph {
 	private static final int POINT_RADIUS = 2;
 	private static final float DEBUG_FONT_SIZE = 14f;
 	
@@ -41,10 +41,11 @@ public class Graph {
 				viewport.getWidth(),
 				viewport.getHeight(),
 				camera.getZoom()));
+		this.hud = new HUDGraph(g2D, viewport.getWidth(), viewport.getHeight());
 		debugStrings = new ArrayList<>();
 		
 		g2D.setColor(rendererSettings.getBackgroundColor());
-		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
+		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10, BasicStroke.JOIN_MITER, BasicStroke.CAP_BUTT));
 	}
 	
 	public Graph(DrawBasePanel drawBasePanel,
@@ -70,7 +71,7 @@ public class Graph {
 		this.hud = new HUDGraph(g2D, drawBasePanel.getWidth(), drawBasePanel.getHeight());
 		g2D.setColor(rendererSettings.getBackgroundColor());
 		g2D.fillRect(viewport.getDrawXOffset(), viewport.getDrawYOffset(), viewport.getWidth(), viewport.getHeight());
-		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10));
+		g2D.setStroke(new BasicStroke((float) camera.getZoom() / 10, BasicStroke.JOIN_MITER, BasicStroke.CAP_BUTT));
 		
 		if (rendererSettings.isRenderingCoordinateSystem()) {
 			drawCoordinateSystem();
@@ -117,10 +118,7 @@ public class Graph {
 		}
 	}
 	
-	public void drawCoordinateSystem() {
-		drawCoordinateSystem(0, 0);
-	}
-
+	@Override
 	public void drawCoordinateSystem(double x, double y) {
 		drawLine(x, x + 10, y, y - 10, Color.BLUE);
 		drawLine(x - 10, x, y + 10, y, Color.RED);
@@ -140,23 +138,13 @@ public class Graph {
 		}
 	}
 	
-	public void drawString(String s, double x, double y) {
-		drawString(s, x, y, Color.BLACK);
-	}
-
-	public void drawString(String s, CoordProvider coord) {
-		drawString(s, coord.getX(), coord.getY(), Color.BLACK);
-	}
-	
+	@Override
 	public void drawString(String s, double x, double y, Color c) {
 		g2D.setColor(c);
 		g2D.drawString(s, convSX(x), convSY(y));
 	}
 
-	public void drawString(String s, CoordProvider coord, Color c) {
-		drawString(s, coord.getX(), coord.getY(), c);
-	}
-	
+	@Override
 	public void drawString(String s, double x, double y, Color c, Font font) {
 		Font previousFont = g2D.getFont();
 		g2D.setFont(font);
@@ -165,10 +153,7 @@ public class Graph {
 		g2D.setFont(previousFont);
 	}
 	
-	public void drawString(String s, CoordProvider coord, Color c, Font font) {
-		drawString(s, coord.getX(), coord.getY(), c, font);
-	}
-	
+	@Override
 	public void drawString(String s, double x, double y, Color c, Font font, TextAlignment textAlignment) {
 		Font previousFont = g2D.getFont();
 		g2D.setFont(font);
@@ -183,107 +168,32 @@ public class Graph {
 		}
 		g2D.setFont(previousFont);
 	}
-
-	public void drawString(String s, CoordProvider coord, Color c, Font font, TextAlignment textAlignment) {
-		drawString(s, coord.getX(), coord.getY(), c, font, textAlignment);
-	}
 	
-	/**
-	 * Calls {@link Graph#drawPoint(double, double, Color)} with the color black
-	 */
-	public void drawPoint(double x, double y) {
-		drawPoint(x, y, Color.BLACK);
-	}
-
-	public void drawPoint(CoordProvider coord) {
-		drawPoint(coord.getX(), coord.getY());
-	}
-	
-	/**
-	 * Similar to {@link Graph#drawCircle(double, double, Color, double)} but will always use a radius of 0.2
-	 */
+	@Override
 	public void drawPoint(double x, double y, Color c) {
 		g2D.setColor(c);
 		g2D.fillArc(convSX(x) - POINT_RADIUS, convSY(y) + POINT_RADIUS, POINT_RADIUS * 2, POINT_RADIUS * 2, 0, 360);
 	}
 	
-	public void drawPoint(CoordProvider coord, Color c) {
-		drawPoint(coord.getX(), coord.getY(), c);
-	}
-	
-	/**
-	 * Draws a circle
-	 * @param x coordinate of center
-	 * @param y coordinate of center
-	 * @param c Color of circle
-	 * @param radius Radius of circle
-	 */
+	@Override
 	public void drawCircle(double x, double y, Color c, double radius) {
 		g2D.setColor(c);
 		g2D.drawArc(convSX(x - radius), convSY(y + radius), convSW(radius * 2), convSH(radius * 2), 0, 360);
 	}
 	
-	public void drawCircle(CoordProvider coord, Color c, double radius) {
-		drawCircle(coord.getX(), coord.getY(), c, radius);
-	}
-	
-	/**
-	 * Fills a circle
-	 * @param x coordinate of center
-	 * @param y coordinate of center
-	 * @param c Color of circle
-	 * @param radius Radius of circle
-	*/
+	@Override
 	public void fillCircle(double x, double y, Color c, double radius) {
 		g2D.setColor(c);
 		g2D.fillArc(convSX(x - radius), convSY(y + radius), convSW(radius * 2), convSH(radius * 2), 0, 360);
 	}
 	
-	public void fillCircle(CoordProvider coord, Color c, double radius) {
-		fillCircle(coord.getX(), coord.getY(), c, radius);
-	}
-	
-	/**
-	 * Draws a line between the points (x0, y0) and (x1, y1) with the color Black
-	 * @param x0
-	 * @param y0
-	 * @param x1
-	 * @param y1
-	 */
-	public void drawLine(double x0, double y0, double x1, double y1) {
-		drawLine(x0, y0, x1, y1, Color.BLACK);
-	}
-
-	public void drawLine(CoordProvider coord1, CoordProvider coord2) {
-		drawLine(coord1.getX(), coord1.getY(), coord2.getX(), coord2.getY(), Color.BLACK);
-	}
-	
-	/**
-	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color
-	 * @param x0
-	 * @param y0
-	 * @param x1
-	 * @param y1
-	 * @param c Color of the line
-	 */
+	@Override
 	public void drawLine(double x0, double y0, double x1, double y1, Color c) {
 		g2D.setColor(c);
 		g2D.drawLine(convSX(x0), convSY(y0), convSX(x1), convSY(y1));
 	}
-	
-	public void drawLine(CoordProvider coord1, CoordProvider coord2, Color c) {
-		drawLine(coord1.getX(), coord1.getY(), coord2.getX(), coord2.getY(), c);
-	}
 
-	/**
-	 * Draws a line between the points (x0, y0) and (x1, y1) with the given color and the stroke width in application line width.
-	 * @param x0
-	 * @param y0
-	 * @param x1
-	 * @param y1
-	 * @param c Color of the line
-	 * @param strokeWidth Width of line in application line width.
-	 */
+	@Override
 	public void drawLine(double x0, double y0, double x1, double y1, Color c, double strokeWidth) {
 		Stroke prevStroke = g2D.getStroke();
 		g2D.setStroke(new BasicStroke(convSLW(strokeWidth)));
@@ -292,137 +202,20 @@ public class Graph {
 		g2D.setStroke(prevStroke);
 	}
 
-	public void drawLine(CoordProvider coord1, CoordProvider coord2, Color c, double strokeWidth) {
-		drawLine(coord1.getX(), coord1.getY(), coord2.getX(), coord2.getY(), c, strokeWidth);
-	}
-
-	public void drawRect(double x, double y, double width, double height) {
-		drawRect(x, y, width, height, Color.BLACK);
-	}
-
-	public void drawRect(CoordProvider coord, double width, double height) {
-		drawRect(coord.getX(), coord.getY(), width, height);
-	}
-	
+	@Override
 	public void drawRect(double x, double y, double width, double height, Color c) {
 		g2D.setColor(c);
 		g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
 	}
-
-	public void drawRect(CoordProvider coord, double width, double height, Color c) {
-		drawRect(coord.getX(), coord.getY(), width, height, c);
-	}
 	
-	public void fillRect(double x, double y, double width, double height) {
-		fillRect(x, y, width, height, Color.BLACK);
-	}
-
-	public void fillRect(CoordProvider coord, double width, double height) {
-		fillRect(coord.getX(), coord.getY(), width, height);
-	}
-	
-	/**
-	 * @deprecated Depracted because spelling mistake; Use {@link Graph#fillRect(CoordProvider, double, double)} instead
-	 */
-	@Deprecated
-	public void filllRect(CoordProvider coord, double width, double height) {
-		drawRect(coord.getX(), coord.getY(), width, height);
-	}
-	
+	@Override
 	public void fillRect(double x, double y, double width, double height, Color c) {
 		g2D.setColor(c);
 		g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
 	}
 
-	public void fillRect(CoordProvider coord, double width, double height, Color c) {
-		fillRect(coord.getX(), coord.getY(), width, height, c);
-	}
-
-	public void drawRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
-		if (degrees == 0) {
-			g2D.setColor(c);
-			g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
-		} else {
-			double drawnWidth = convSW(width);
-			double drawnHeight = convSH(height);
-			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
-			area.translate(0, -drawnHeight);
-			area.rotate(Math.toRadians(degrees), convSX(x) + drawnWidth * 0.5, convSY(y) + drawnHeight * 0.5);
-			area.setColor(c);
-			area.drawRect(convSX(x), convSY(y), (int) drawnWidth, (int) drawnHeight);
-			area.dispose();
-		}
-	}
-	
-	public void drawRotatedRect(CoordProvider coord, double width, double height, double degrees, Color c) {
-		drawRotatedRect(coord.getX(), coord.getY(), width, height, degrees, c);
-	}
-	
-	public void fillRotatedRect(double x, double y, double width, double height, double degrees, Color c) {
-		if (degrees == 0) {
-			g2D.setColor(c);
-			g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
-		} else {
-			double drawnWidth = convSW(width);
-			double drawnHeight = convSH(height);
-			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
-			area.translate(0, -drawnHeight);
-			area.rotate(Math.toRadians(degrees), convSX(x) + drawnWidth * 0.5, convSY(y) + drawnHeight * 0.5);
-			area.setColor(c);
-			area.fillRect(convSX(x), convSY(y), (int) drawnWidth, (int) drawnHeight);
-			area.dispose();
-		}
-	}
-
-	public void fillRotatedRect(CoordProvider coord, double width, double height, double degrees, Color c) {
-		fillRotatedRect(coord.getX(), coord.getY(), width, height, degrees, c);
-	}
-
-	public void drawRotatedCenteredRect(double x, double y, double width, double height, double degrees, Color c) {
-		double halfWidth = width * 0.5;
-		double halfHeight = height * 0.5;
-		if (degrees == 0) {
-			g2D.setColor(c);
-			g2D.drawRect(convSX(x - halfWidth), convSY(y + halfHeight), convSW(width), convSH(height));
-		} else {
-			double drawnWidth = convSW(width);
-			double drawnHeight = convSH(height);
-			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
-			area.translate(0, -drawnHeight);
-			area.rotate(Math.toRadians(degrees), convSX(x - halfWidth) + drawnWidth * 0.5, convSY(y - halfHeight) + drawnHeight * 0.5);
-			area.setColor(c);
-			area.drawRect(convSX(x - halfWidth), convSY(y - halfHeight), (int) drawnWidth, (int) drawnHeight);
-			area.dispose();
-		}
-	}
-	
-	public void drawRotatedCenteredRect(CoordProvider coord, double width, double height, double degrees, Color c) {
-		drawRotatedCenteredRect(coord.getX(), coord.getY(), width, height, degrees, c);
-	}
-	
-	public void fillRotatedCenteredRect(double x, double y, double width, double height, double degrees, Color c) {
-		double halfWidth = width * 0.5;
-		double halfHeight = height * 0.5;
-		if (degrees == 0) {
-			g2D.setColor(c);
-			g2D.fillRect(convSX(x - halfWidth), convSY(y + halfHeight), convSW(width), convSH(height));
-		} else {
-			double drawnWidth = convSW(width);
-			double drawnHeight = convSH(height);
-			Graphics2D area = (Graphics2D) g2D.create(0, 0, viewport.getWidth(), viewport.getHeight());
-			area.translate(0, -drawnHeight);
-			area.rotate(Math.toRadians(degrees), convSX(x - halfWidth) + drawnWidth * 0.5, convSY(y - halfHeight) + drawnHeight * 0.5);
-			area.setColor(c);
-			area.fillRect(convSX(x - halfWidth), convSY(y - halfHeight), (int) drawnWidth, (int) drawnHeight);
-			area.dispose();
-		}
-	}
-	
-	public void fillRotatedCenteredRect(CoordProvider coord, double width, double height, double degrees, Color c) {
-		fillRotatedCenteredRect(coord.getX(), coord.getY(), width, height, degrees, c);
-	}
-
-	public void drawPivottedRotatedCenteredRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
+	@Override
+	public void drawPivottedRotatedRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
 		if (degrees == 0) {
 			g2D.setColor(c);
 			g2D.drawRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
@@ -437,12 +230,9 @@ public class Graph {
 			area.dispose();
 		}
 	}
-	
-	public void drawPivottedRotatedCenteredRect(CoordProvider coord, CoordProvider localPivot, double width, double height, double degrees, Color c) {
-		drawPivottedRotatedCenteredRect(coord.getX(), coord.getY(), localPivot.getX(), localPivot.getY(), width, height, degrees, c);
-	}
 
-	public void fillPivottedRotatedCenteredRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
+	@Override
+	public void fillPivottedRotatedRect(double x, double y, double pivotX, double pivotY, double width, double height, double degrees, Color c) {
 		if (degrees == 0) {
 			g2D.setColor(c);
 			g2D.fillRect(convSX(x), convSY(y + height), convSW(width), convSH(height));
@@ -458,29 +248,18 @@ public class Graph {
 		}
 	}
 
-	
-	public void fillPivottedRotatedCenteredRect(CoordProvider coord, CoordProvider localPivot, double width, double height, double degrees, Color c) {
-		fillPivottedRotatedCenteredRect(coord.getX(), coord.getY(), localPivot.getX(), localPivot.getY(), width, height, degrees, c);
-	}
-
+	@Override
 	public void drawImage(Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth() / scale);
 		int imgHeight = (int) convSH(image.getHeight() / scale);
 		g2D.drawImage(image.getBufferedImage(), convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
 	}
 	
-	public void drawImage(Image image, CoordProvider coord, double scale) {
-		drawImage(image, coord.getX(), coord.getY(), scale);
-	}
-	
+	@Override
 	public void drawImage(java.awt.Image image, double x, double y, double scale) {
 		int imgWidth = (int) convSW(image.getWidth(null) / scale);
 		int imgHeight = (int) convSH(image.getHeight(null) / scale);
 		g2D.drawImage(image, convSX(x) - imgWidth / 2, convSY(y) - imgHeight / 2, imgWidth, imgHeight, null);
-	}
-
-	public void drawImage(java.awt.Image image, CoordProvider coord, double scale) {
-		drawImage(image, coord.getX(), coord.getY(), scale);
 	}
 	
 	public void drawRotatedImage(Image image, double x, double y, double scale, double degrees) {
