@@ -4,7 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 
 public interface OverloadedGraph {
-	void drawCoordinateSystem(double x, double y);
+	default void drawCoordinateSystem(double x, double y) {
+		drawLine(x, x + 10, y, y - 10, Color.BLUE);
+		drawLine(x - 10, x, y + 10, y, Color.RED);
+		for (int i = -10; i <= 10; i++) {
+			if (i == 0) continue;
+			drawLine(x + i, y + 0.1, x + i, y - 0.1, Color.RED);
+		}
+		for (int i = -10; i <= 10; i++) {
+			if (i == 0) continue;
+			drawLine(x - 0.1, y + i, x + 0.1, y + i, Color.BLUE);
+		}
+	}
 	
 	default void drawCoordinateSystem(CoordProvider pos) {
 		drawCoordinateSystem(pos.getX(), pos.getY());

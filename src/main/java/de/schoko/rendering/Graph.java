@@ -118,20 +118,6 @@ public class Graph implements OverloadedGraph {
 		}
 	}
 	
-	@Override
-	public void drawCoordinateSystem(double x, double y) {
-		drawLine(x, x + 10, y, y - 10, Color.BLUE);
-		drawLine(x - 10, x, y + 10, y, Color.RED);
-		for (int i = -10; i <= 10; i++) {
-			if (i == 0) continue;
-			drawLine(x + i, y + 0.1, x + i, y - 0.1, Color.RED);
-		}
-		for (int i = -10; i <= 10; i++) {
-			if (i == 0) continue;
-			drawLine(x - 0.1, y + i, x + 0.1, y + i, Color.BLUE);
-		}
-	}
-	
 	public void draw(Shape... shapes) {
 		for (int i = 0; i < shapes.length; i++) {
 			shapes[i].render(this);
