@@ -108,7 +108,7 @@ public class Graph implements OverloadedGraph {
 	
 	public void finalize() {
 		hud.call();
-		panelSystem.draw(hud);
+		if (panelSystem != null) panelSystem.draw(hud);
 		hud.call();
 		
 		g2D.setColor(Color.BLUE);

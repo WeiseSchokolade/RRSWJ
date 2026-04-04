@@ -56,7 +56,7 @@ public class Window {
 				new ImagePool(),
 				null);
 		// Adds the panel system afterwards as it requires the context
-		this.context.setPanelSystem(new PanelSystem(context, drawBasePanel));
+		this.context.setPanelSystem(new PanelSystem(context, drawBasePanel.getFont()));
 		
 		// Loads the context into the renderer
 		this.drawBasePanel.setContext(context);

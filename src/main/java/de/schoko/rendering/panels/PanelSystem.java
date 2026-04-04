@@ -1,6 +1,7 @@
 package de.schoko.rendering.panels;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
 import de.schoko.rendering.Context;
@@ -13,11 +14,16 @@ public class PanelSystem {
 	private PanelTheme theme;
 	private boolean hidden;
 	
-	public PanelSystem(Context context, DrawBasePanel drawBasePanel) {
+	@Deprecated
+	public PanelSystem(Context context, DrawBasePanel drawBasePanel) { // TODO: Remove constructor
+		this(context, drawBasePanel.getFont());
+	}
+
+	public PanelSystem(Context context, Font font) {
 		panels = new ArrayList<>();
 		this.context = context;
 		theme = new PanelTheme(
-				drawBasePanel.getFont(),
+				font,
 				Color.GRAY,
 				Color.LIGHT_GRAY,
 				Color.WHITE,
