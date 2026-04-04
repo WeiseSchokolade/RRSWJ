@@ -10,7 +10,7 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 
 import de.schoko.rendering.panels.PanelSystem;
-import de.schoko.rendering.shapes.Shape;
+import de.schoko.rendering.shapes.Renderable;
 
 public class Graph implements OverloadedGraph {
 	private static final int POINT_RADIUS = 2;
@@ -98,11 +98,10 @@ public class Graph implements OverloadedGraph {
 	}
 	
 	/**
-	 * This method cannot be static because it uses the underlying {@link Graphics2D#getFontMetrics()} method
 	 * @param text The string to be measured
 	 * @return The width of the entered string in pixels
 	 */
-	public int getStringWidth(String text) {
+	public int getStringWidth(String text) { // This method cannot be static since it uses the underlying {@link Graphics2D#getFontMetrics()} method
 		return g2D.getFontMetrics(g2D.getFont()).stringWidth(text);
 	}
 	
@@ -117,10 +116,14 @@ public class Graph implements OverloadedGraph {
 			g2D.drawString(debugStrings.get(i), 1, i * (DEBUG_FONT_SIZE + 2) + DEBUG_FONT_SIZE);
 		}
 	}
+
+	public void draw(Renderable renderable) {
+		renderable.render(this);
+	}
 	
-	public void draw(Shape... shapes) {
-		for (int i = 0; i < shapes.length; i++) {
-			shapes[i].render(this);
+	public void draw(Renderable... renderables) {
+		for (int i = 0; i < renderables.length; i++) {
+			renderables[i].render(this);
 		}
 	}
 	
@@ -145,12 +148,16 @@ public class Graph implements OverloadedGraph {
 		g2D.setFont(font);
 		g2D.setColor(c);
 		double stringWidth = getStringWidth(s, font);
-		if (textAlignment == TextAlignment.LEFT) {
+		switch (textAlignment) {
+		case LEFT:
 			g2D.drawString(s, convSX(x), convSY(y));
-		} else if (textAlignment == TextAlignment.CENTER) {
+			break;
+		case CENTER:
 			g2D.drawString(s, (int) (convSX(x) - stringWidth / 2), convSY(y));
-		} else {
+			break;
+		default:
 			g2D.drawString(s, (int) (convSX(x) - stringWidth), convSY(y));
+			break;
 		}
 		g2D.setFont(previousFont);
 	}
