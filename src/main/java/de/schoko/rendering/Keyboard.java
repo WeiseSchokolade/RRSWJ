@@ -128,6 +128,7 @@ public class Keyboard {
 		for (int i = 0; i < recentlyPressedKeys.length; i++) {
 			recentlyPressedKeys[i] = false;
 		}
+		recentlyTypedCharacters.clear();
 	}
 
 	/**
